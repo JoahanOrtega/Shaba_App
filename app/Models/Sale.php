@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    protected $fillable = ['id_product', 'id_customer', 'sale_date', 'quantity', 'total_price'];
+    protected $fillable = ['id_product', 'id_user', 'sale_date', 'quantity', 'total_price'];
 
     public function product()
     {
         return $this->belongsTo('App\Models\Product', 'id_product');
     }
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo('App\Models\Customer', 'id_customer');
+        return $this->belongsTo('App\Models\User', 'id_user');
     }
     use HasFactory;
 }
