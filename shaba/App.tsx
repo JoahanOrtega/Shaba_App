@@ -15,8 +15,8 @@ import Product from './components/Product';
 export default function App() {
   return (
     <GluestackUIProvider config={config}>
-      {<Home />}
-      {/*<Product/>*/}
+      {/*<Home />*/}
+      {<Product/>}
       {/* <Login/>  */}
       {/* <Register/> */}
       {/* <Catalogo/> */}

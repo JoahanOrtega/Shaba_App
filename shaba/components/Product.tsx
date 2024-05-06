@@ -1,78 +1,82 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { View,StarIcon,Box,Card,Image,Heading,Text,Icon,FavouriteIcon, VStack,HStack } from '@gluestack-ui/themed';
-const Product:React.FC =()=>{
-    return(
-        <Box w={"$full"} h={"$full"}>
-            <VStack alignItems="center" w={"$full"} h={"$full"}>
-<Card p="$5" borderRadius="$lg" w={"$full"} h={"$full"} m="$3" bg='$amber200'>
+import { View, Image, Text, Icon } from '@gluestack-ui/themed';
+import { LinearGradient } from 'expo-linear-gradient'; // Importar LinearGradient desde expo-linear-gradient
+import { FavouriteIcon } from '@gluestack-ui/icons'; // Importa el componente FavouriteIcon desde la biblioteca de iconos
 
-<Image
-          style={styles.image}
-          source={{
-            uri: 'https://ae01.alicdn.com/kf/He0634bf6016e4f2a9987640eee7937004.jpg_640x640Q90.jpg_.webp',
-          }}  
-        />
-        <Box>
-      <HStack>
-      <Text style={styles.productName}>Arm Chair & Pillow</Text>
-         
-         <Icon  style={styles.favoriteIcon} as={FavouriteIcon} m="$2" w="$4" h="$4" />
-         
-         
-         </HStack>
-         </Box>
-         <Text style={styles.productPrice}>$250.00</Text>
-         <Text style={styles.productDescription}>
-           This is a comfortable arm chair with a matching pillow. Perfect for your living room!
-         </Text>
-        
-         <View style={styles.ratingContainer}>
-        {/* hstack */}
-        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-      </View>
-    </Card>
-    </VStack>
-    </Box>
+const Product: React.FC = () => {
+    return (
+        <LinearGradient
+            colors={['pink', 'white']} // Colores del degradado
+            style={styles.container} // Estilo para el contenedor
+        >
+            <View style={styles.contentContainer}>
+                {/* Contenido de tu componente */}
+                <Image
+                    style={styles.image}
+                    source={{
+                        uri: 'https://th.bing.com/th/id/OIP.rFVs_R5SMm40tO3LI8VUrgHaJ3?rs=1&pid=ImgDetMain',
+                    }}  
+                />
+                <View style={styles.infoContainer}>
+                    <Text style={styles.productName}>Blusa</Text>
+                    <Icon style={styles.favoriteIcon} as={FavouriteIcon} m="$2" w="$4" h="$4" />
+                    <Text style={styles.productPrice}>$250.00</Text>
+                    <Text style={styles.productDescription}>Blusa de mujer roja, etc, etc</Text>
+                    <View style={styles.ratingContainer}>
+                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
+                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
+                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
+                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
+                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
+                    </View>
+                </View>
+            </View>
+        </LinearGradient>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+        flex: 1,
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 20,
     },
     image: {
-      width: '100%',
-      height: 300,
+        width: '100%',
+        height: 300,
+    },
+    infoContainer: {
+        marginTop: 20,
+        alignItems: 'center',
     },
     productName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  productPrice: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'green',
-  },
-  productDescription: {
-    fontSize: 16,
-    marginBottom: 20,
-  },
-  favoriteIcon:{
-    
-    marginRight:90,
-  },
-  
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    // color: 'yellow', /* color amarillo para estrellas llenas */
-  },
-  });
-  
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    productPrice: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: 'green',
+    },
+    productDescription: {
+        fontSize: 16,
+        marginBottom: 20,
+    },
+    favoriteIcon:{
+        marginRight: 10,
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        color: 'pink', 
+    },
+});
+
 export default Product;
