@@ -17,11 +17,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Rutas para el controlador UserController
-Route::get('/customers', [UserController::class, 'index']);
-Route::get('/customers/{id}', [UserController::class, 'show']);
-Route::post('/customers', [UserController::class, 'store']);
-Route::put('/customers/{id}', [UserController::class, 'update']);
-Route::delete('/customers/{id}', [UserController::class, 'destroy']);
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::post('/users', [UserController::class, 'store']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 // Rutas para el controlador CategoryController
 Route::get('/categories', [CategoryController::class, 'index']);
