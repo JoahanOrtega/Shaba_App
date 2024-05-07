@@ -6,18 +6,16 @@ import DocumentData from "./assets/Icons/DocumentData";
 import LightBulbPerson from "./assets/Icons/LightbulbPerson";
 import Rocket from "./assets/Icons/Rocket";
 import Logo from "./assets/Icons/Logo";
-// import ListCards from "./components/ListCards";
-import Login from "./presentation/components/Login";
-import Register from "./presentation/components/Register";
 import Home from "./presentation/screens/HomeScreen";
-import Product from "./presentation/screens/ProductScreen";
+import ProductScreen from "./presentation/screens/ProductScreen";
+import { LoginScreen } from "./presentation/screens/LoginScreen";
 
 export default function App() {
     return (
         <GluestackUIProvider config={config}>
             {/*<Home />*/}
-            {<Product />}
-            {/* <Login/>  */}
+            {/* {<ProductScreen />} */}
+            <LoginScreen />
             {/* <Register/> */}
             {/* <Catalogo/> */}
             {/* <Prueba/>  */}

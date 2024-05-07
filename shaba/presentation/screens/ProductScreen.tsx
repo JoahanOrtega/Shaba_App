@@ -14,13 +14,14 @@ import {
     VStack,
     HStack,
 } from "@gluestack-ui/themed";
-const Product: React.FC = () => {
+import { globalStyles } from "../theme/global.style";
+const ProductScreen: React.FC = () => {
     return (
         <LinearGradient
             colors={["pink", "white"]} // Colores del degradado
-            style={styles.container} // Estilo para el contenedor
+            style={globalStyles.container} // Estilo para el contenedor
         >
-            <View style={styles.contentContainer}>
+            <View style={globalStyles.contentContainer}>
                 {/* Contenido de tu componente */}
                 <Image
                     style={styles.image}
@@ -41,13 +42,6 @@ const Product: React.FC = () => {
                     <Text style={styles.productDescription}>
                         Blusa de mujer roja, etc, etc
                     </Text>
-                    <View style={styles.ratingContainer}>
-                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-                        <Icon as={StarIcon} m="$1" w="$4" h="$4" />
-                    </View>
                 </View>
             </View>
         </LinearGradient>
@@ -55,15 +49,6 @@ const Product: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    contentContainer: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
     image: {
         width: "100%",
         height: 300,
@@ -97,4 +82,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Product;
+export default ProductScreen;
