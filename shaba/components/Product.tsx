@@ -1,19 +1,19 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Image, Text, Icon } from '@gluestack-ui/themed';
-import { LinearGradient } from 'expo-linear-gradient'; // Importar LinearGradient desde expo-linear-gradient
-import { FavouriteIcon } from '@gluestack-ui/icons'; // Importa el componente FavouriteIcon desde la biblioteca de iconos
+import { LinearGradient } from 'expo-linear-gradient'; // Importa LinearGradient desde expo-linear-gradient
+import { View,StarIcon,Box,Card,Image,Heading,Text,Icon,FavouriteIcon, VStack,HStack } from '@gluestack-ui/themed';
 
 const Product: React.FC = () => {
     return (
         <LinearGradient
-            colors={['pink', 'white']} // Colores del degradado
+            colors={['#FFC0CB', '#FFFFFF']} // Colores del degradado, inverso al de Home
             style={styles.container} // Estilo para el contenedor
         >
             <View style={styles.contentContainer}>
                 {/* Contenido de tu componente */}
                 <Image
                     style={styles.image}
+                    resizeMode="cover" // Ajusta la imagen para que cubra todo el contenedor
                     source={{
                         uri: 'https://th.bing.com/th/id/OIP.rFVs_R5SMm40tO3LI8VUrgHaJ3?rs=1&pid=ImgDetMain',
                     }}  
