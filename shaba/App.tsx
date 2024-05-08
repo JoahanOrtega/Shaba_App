@@ -15,7 +15,7 @@ import Profile from "./presentation/screens/Profile";
 export default function App() {
     return (
         <GluestackUIProvider config={config}>
-            <LandingScreen />
+            {/* <LandingScreen /> */}
             {/*<Product/>*/}
             {/* <Login/>  */}
             {/* <Register/> */}
