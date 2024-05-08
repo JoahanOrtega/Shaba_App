@@ -10,6 +10,7 @@ export const ShabaLogo = () => {
                 alt="Shaba Logo"
                 source={require("../../../assets/images/shaba.png")}
                 style={styles.logo}
+                resizeMode="cover" // Pasando resizeMode como una propiedad
             />
         </View>
     );
@@ -27,6 +28,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-        resizeMode: "cover", // Ajustar la imagen al contenedor
+        // resizeMode: "cover", // Ajustar la imagen al contenedor
     },
 });
