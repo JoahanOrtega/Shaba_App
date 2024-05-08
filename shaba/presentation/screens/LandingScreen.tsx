@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 
-export const HomeScreen = () => {
+export const LandingScreen = () => {
     return (
         <View style={styles.container}>
             <LinearGradient
