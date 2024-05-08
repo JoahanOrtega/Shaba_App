@@ -11,6 +11,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@react-aria/selection": "^3.18.0",
         "expo": "^50.0.17",
         "expo-linear-gradient": "^12.7.2"
     }
