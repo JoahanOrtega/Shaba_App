@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+#node modules del front
+/shaba/node_modules
+/shaba/.expo
