@@ -1,29 +1,24 @@
+import "react-native-gesture-handler";
 import { config } from "@gluestack-ui/config";
-import { Box, GluestackUIProvider, Text } from "@gluestack-ui/themed";
-import { ScrollView } from "react-native";
-import Gradient from "./assets/Icons/Gradient";
-import DocumentData from "./assets/Icons/DocumentData";
-import LightBulbPerson from "./assets/Icons/LightbulbPerson";
-import Rocket from "./assets/Icons/Rocket";
-import Logo from "./assets/Icons/Logo";
-//import Login from './components/Login';
-//import Register from './components/Register';
-import { LandingScreen } from "./presentation/screens/LandingScreen";
-//import Profile from './components/Profile';
-import Profile from "./presentation/screens/Profile";
-import { LoginScreen } from "./presentation/screens/LoginScreen";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { NavigationContainer } from "@react-navigation/native";
+import { StackNavigator } from "./src/presentation/routes/StackNavigator";
+
 export default function App() {
     return (
-        <GluestackUIProvider config={config}>
-            {/* <LandingScreen /> */}
-            {/*<Product/>*/}
-            {/* <Login/>  */}
-            {/* <Register/> */}
-            {/* <Catalogo/> */}
-            {/* <Prueba/>  */}
-            {/* {<Profile/>} */}
-            {/* <Inicio/> */}
-        </GluestackUIProvider>
+        <NavigationContainer>
+            <GluestackUIProvider config={config}>
+                {/* <LandingScreen /> */}
+                {/*<Product/>*/}
+                {/* <Login/>  */}
+                {/* <Register/> */}
+                {/* <Catalogo/> */}
+                {/* <Prueba/>  */}
+                {/* {<Profile/>} */}
+                {/* <Inicio/> */}
+                <StackNavigator />
+            </GluestackUIProvider>
+        </NavigationContainer>
     );
 }
 
