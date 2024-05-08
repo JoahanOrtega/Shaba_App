@@ -11,7 +11,7 @@ import Logo from "./assets/Icons/Logo";
 import { LandingScreen } from "./presentation/screens/LandingScreen";
 //import Profile from './components/Profile';
 import Profile from "./presentation/screens/Profile";
-
+import { LoginScreen } from "./presentation/screens/LoginScreen";
 export default function App() {
     return (
         <GluestackUIProvider config={config}>
