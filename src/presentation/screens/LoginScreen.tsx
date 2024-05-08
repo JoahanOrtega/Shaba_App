@@ -8,24 +8,30 @@ import { ButtonMd } from "../components/ButtonMd";
 import { useNavigation } from "@react-navigation/native";
 
 export const LoginScreen = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    return (
-        <View style={globalStyles.container}>
-            <LinearGradient
-                colors={["#FFFFFF", "#FFC0CB"]} // Colores del degradado
-                style={globalStyles.background} // Estilo para el contenedor
-            ></LinearGradient>
-            <ShabaLogo />
+  return (
+    <View style={globalStyles.container}>
+      <LinearGradient
+        colors={["#FFFFFF", "#FFC0CB"]} // Colores del degradado
+        style={globalStyles.background} // Estilo para el contenedor
+      ></LinearGradient>
+      <ShabaLogo />
 
-            <ButtonMd
-                label="Login"
-                onPress={() => {
-                    navigation.navigate("Landing" as never);
-                }}
-            />
-        </View>
-    );
+      <ButtonMd
+        label="Login"
+        onPress={() => {
+          navigation.navigate("Landing" as never);
+        }}
+      />
+      <ButtonMd
+        label="Register"
+        onPress={() => {
+          navigation.navigate("Register" as never);
+        }}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({});
