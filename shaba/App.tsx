@@ -8,7 +8,7 @@ import Rocket from './assets/Icons/Rocket';
 import Logo from './assets/Icons/Logo';
 //import Login from './components/Login';
 //import Register from './components/Register';
-import HomeScreen from './presentation/screens/HomeScreen';
+import {HomeScreen} from './presentation/screens/HomeScreen';
 //import Profile from './components/Profile';
 import Profile from './presentation/screens/Profile';
 
