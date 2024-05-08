@@ -14,7 +14,7 @@ interface Props {
   navigation: NavigationProp;
 }
 
-const Home: React.FC<Props> = ({ navigation }) => {
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const goToScreen = (screenName: ScreenNames) => {
     navigation.navigate(screenName);
   };
@@ -23,7 +23,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
     <View style={styles.container}>
       <LinearGradient colors={['#FFFFFF', '#FFC0CB']} style={styles.background} /> {/* Fondo degradado */}
       <View style={styles.logoContainer}>
-        <Image source={require('../images/shaba.png')} style={styles.logo} />
+        <Image source={require('../../assets/images/shaba.png')} style={styles.logo} />
       </View>
       <Text style={styles.title}>Welcome to SHABA!</Text>
       <TouchableOpacity style={styles.button} onPress={() => goToScreen('SignIn')}>
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default HomeScreen;
 
 

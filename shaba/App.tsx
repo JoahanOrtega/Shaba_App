@@ -8,14 +8,14 @@ import Rocket from './assets/Icons/Rocket';
 import Logo from './assets/Icons/Logo';
 //import Login from './components/Login';
 //import Register from './components/Register';
-//import Home from './components/Home';
+import HomeScreen from './presentation/screens/HomeScreen';
 //import Profile from './components/Profile';
 import Profile from './presentation/screens/Profile';
 
 export default function App() {
   return (
     <GluestackUIProvider config={config}>
-      {/*<Home />*/}
+      {/*<HomeScreen/>*/}
       {/*<Product/>*/}
       {/* <Login/>  */}
       {/* <Register/> */}
