@@ -17,7 +17,7 @@ import {
 import { globalStyles } from "../theme/theme";
 import { useNavigation } from "@react-navigation/native";
 import { ButtonMd } from "../components/ButtonMd";
-const ProductScreen: React.FC = () => {
+export const ProductScreen: React.FC = () => {
   const navigation = useNavigation();
 
   return (
@@ -91,5 +91,3 @@ const styles = StyleSheet.create({
     color: "pink",
   },
 });
-
-export default ProductScreen;
