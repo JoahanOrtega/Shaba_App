@@ -24,6 +24,7 @@ export const LoginScreen = () => {
           navigation.navigate("Landing" as never);
         }}
       />
+      <br></br>
       <ButtonMd
         label="Register"
         onPress={() => {

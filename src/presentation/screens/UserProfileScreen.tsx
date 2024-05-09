@@ -21,7 +21,7 @@ const UserProfileScreen: React.FC = () => {
     const fetchProfileData = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:8000/api/users/1"
+                "http://localhost:8000/api/users/2"
             );
             setFormData(response.data);
         } catch (error) {
@@ -59,10 +59,19 @@ const UserProfileScreen: React.FC = () => {
                     }),
             };
 
-            await axios.put("http://localhost:8000/api/users/1", profileData);
+            await axios.put("http://localhost:8000/api/users/2", profileData);
             console.log("Profile data updated successfully.");
         } catch (error) {
             console.error("Error updating profile:", error);
+        }
+        
+    };
+    const handleDelete = async () => {
+        try {
+            await axios.delete("http://localhost:8000/api/users/2");
+            console.log("Profile deleted successfully");
+        } catch (error) {
+            console.error("Error deleting profile:", error);
         }
     };
 
@@ -121,6 +130,10 @@ const UserProfileScreen: React.FC = () => {
             />
             <Pressable style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Save Changes</Text>
+            </Pressable>
+            <br></br>
+            <Pressable style={styles.button} onPress={handleDelete}>
+                <Text style={styles.buttonText}>Delete Profile</Text>
             </Pressable>
         </View>
     );

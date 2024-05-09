@@ -27,8 +27,10 @@ export const ButtonMd = ({ label, onPress }: Props) => {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 15,
+        padding: 20,
         borderRadius: 5,
+        paddingVertical: 10,
+        alignItems: "center", 
     },
     buttonText: {
         color: "#fff",
