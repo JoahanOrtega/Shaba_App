@@ -19,3 +19,7 @@ npx expo install react-native-svg
 npm i @ui-kitten/eva-icons react-native-svg
 npx expo install react-native-svg
 
+npm install -D react-native-dotenv
+
+npm install axios
+

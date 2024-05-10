@@ -27,7 +27,19 @@ export default function App() {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={theme}>
-        <NavigationContainer>
+        <NavigationContainer
+          theme={{
+            dark: colorScheme === "dark",
+            colors: {
+              primary: theme["color-primary-500"],
+              background: backGroundColor,
+              card: theme["color-basic-100"],
+              text: theme["text-basic-color"],
+              border: theme["color-basic-900"],
+              notification: theme["color-primary-500"],
+            },
+          }}
+        >
           <StackNavigator />
         </NavigationContainer>
       </ApplicationProvider>
