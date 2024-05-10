@@ -8,6 +8,7 @@ import { ButtonMd } from "../components/ButtonMd";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
+import { MyIcon } from "../components/ui/MyIcon";
 
 export const LoginScreen = () => {
   const { height } = useWindowDimensions();
@@ -44,6 +45,8 @@ export const LoginScreen = () => {
         {/* Button */}
         <Layout>
           <Button
+            // accessoryRight={<MyIcon name="arrow-forward-outline" white/>}
+            // accessoryRight={<MyIcon name="arrow-forward-outline" />}
             onPress={() => {}}
             // appearance="ghost"
           >
