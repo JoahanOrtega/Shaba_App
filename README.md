@@ -25,3 +25,7 @@ npm install axios
 
 npm install zustand
 
+# Configurar .env
+
+copia .env.template => .env
+dentro de este cambia la direccion IP por la tuya, de esta manera podra ejecutarse sin problemas en cualquier dispositivo
