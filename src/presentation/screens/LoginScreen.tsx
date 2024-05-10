@@ -16,10 +16,9 @@ interface Props extends StackScreenProps<RootStackParams, "LoginScreen"> {}
 export const LoginScreen = ({ navigation }: Props) => {
   const { height } = useWindowDimensions();
 
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-  const stageUrl = process.env.EXPO_PUBLIC_STAGE;
-  console.log(apiUrl, stageUrl);
-  //imprimir una variable de entorno
+  // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  // const stageUrl = process.env.EXPO_PUBLIC_STAGE;
+  // // console.log(apiUrl, stageUrl);
 
   // console.log(API_URL);
   // console.log({process.env.EXPO_PUBLIC_API_URL})
