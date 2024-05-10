@@ -23,3 +23,5 @@ npm install -D react-native-dotenv
 
 npm install axios
 
+npm install zustand
+
