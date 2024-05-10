@@ -1,14 +1,37 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { Button, Icon, Input, Layout, Text } from "@ui-kitten/components";
-import { useWindowDimensions } from "react-native";
+import { Alert, useWindowDimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { RootStackParams } from "../../navigation/StackNavigator";
 import { MyIcon } from "../../components/ui/MyIcon";
+import { useState } from "react";
+import { useAuthStore } from "../../store/auth/useAuthStore";
 
 interface Props extends StackScreenProps<RootStackParams, "LoginScreen"> {}
 
 export const LoginScreen = ({ navigation }: Props) => {
+  const { login } = useAuthStore();
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
   const { height } = useWindowDimensions();
+
+  const onLogin = async () => {
+    console.log("entre al metodo onlogin");
+    if (form.email.length === 0 || form.password.length === 0) {
+      console.log("esta vacio el formulario nmms");
+      return;
+    }
+    const wasSuccessful = await login(form.email, form.password);
+
+    console.log(wasSuccessful);
+    if (wasSuccessful) return;
+    console.log("termino la validacion");
+    Alert.alert("Error", "Usuario o contraseña incorrectos");
+  };
 
   // //show env variables
   // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
@@ -29,6 +52,8 @@ export const LoginScreen = ({ navigation }: Props) => {
             placeholder="Email"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={form.email}
+            onChangeText={(email) => setForm({ ...form, email })}
             accessoryLeft={<MyIcon name="email-outline" />}
             style={{ marginBottom: 10 }}
           />
@@ -36,10 +61,15 @@ export const LoginScreen = ({ navigation }: Props) => {
             placeholder="Password"
             autoCapitalize="none"
             secureTextEntry
+            value={form.password}
+            onChangeText={(password) => setForm({ ...form, password })}
             accessoryLeft={<MyIcon name="lock-outline" />}
             style={{ marginBottom: 10 }}
           />
         </Layout>
+
+        {/* visualize what inputs i have */}
+        <Text> {JSON.stringify(form, null, 2)}</Text>
 
         {/* Space */}
         <Layout style={{ height: 10 }} />
@@ -48,7 +78,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout>
           <Button
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}
-            onPress={() => {}}
+            onPress={onLogin}
             // appearance="ghost"
           >
             Ingresar
