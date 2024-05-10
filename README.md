@@ -29,3 +29,4 @@ npm install zustand
 
 copia .env.template => .env
 dentro de este cambia la direccion IP por la tuya, de esta manera podra ejecutarse sin problemas en cualquier dispositivo
+el puerto claramente se deja igual, a menos que en Laravel te muestre otro con el **php artisan serve**
