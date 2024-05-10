@@ -13,11 +13,28 @@ import { GluestackUIProvider } from "@gluestack-ui/themed";
 export default function App() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? eva.dark : eva.light;
+  const backGroundColor =
+    colorScheme === "dark"
+      ? theme["color-basic-800"]
+      : theme["color-basic-100"];
 
   return (
     <>
+      {/* <IconRegistry icons={EvaIconsPack} /> */}
       <ApplicationProvider {...eva} theme={theme}>
-        <NavigationContainer>
+        <NavigationContainer
+          theme={{
+            dark: colorScheme === "dark",
+            colors: {
+              primary: theme["color-primary-500"],
+              background: backGroundColor,
+              card: theme["color-basic-100"],
+              text: theme["text-basic-color"],
+              border: theme["color-basic-900"],
+              notification: theme["color-primary-500"],
+            },
+          }}
+        >
           <GluestackUIProvider config={config}>
             <StackNavigator />
           </GluestackUIProvider>

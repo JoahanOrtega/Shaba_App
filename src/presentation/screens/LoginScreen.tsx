@@ -5,14 +5,24 @@ import { StyleSheet, useWindowDimensions } from "react-native";
 import { globalStyles } from "../theme/theme";
 import { ShabaLogo } from "../components/ShabaLogo";
 import { ButtonMd } from "../components/ButtonMd";
-import { useNavigation } from "@react-navigation/native";
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { MyIcon } from "../components/ui/MyIcon";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParams } from "../routes/StackNavigator";
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<RootStackParams, "LoginScreen"> {}
+
+export const LoginScreen = ({ navigation }: Props) => {
   const { height } = useWindowDimensions();
-  const navigation = useNavigation();
+
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  const stageUrl = process.env.EXPO_PUBLIC_STAGE;
+  console.log(apiUrl, stageUrl);
+  //imprimir una variable de entorno
+
+  // console.log(API_URL);
+  // console.log({process.env.EXPO_PUBLIC_API_URL})
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -40,7 +50,7 @@ export const LoginScreen = () => {
         </Layout>
 
         {/* Space */}
-        <Layout style={{ height: 20 }} />
+        <Layout style={{ height: 10 }} />
 
         {/* Button */}
         <Layout>
@@ -64,7 +74,13 @@ export const LoginScreen = () => {
           }}
         >
           <Text>¿No tienes cuenta?</Text>
-          <Text status="primary" category="s1" onPress={() => {}}>
+          <Text
+            status="primary"
+            category="s1"
+            onPress={() => {
+              navigation.navigate("RegisterScreen");
+            }}
+          >
             {" "}
             crea una{" "}
           </Text>
