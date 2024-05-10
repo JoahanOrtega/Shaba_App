@@ -1,5 +1,7 @@
 # Dependencias utilizadas
 
+npm install
+
 npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
 
 npx expo install react-dom react-native-web @expo/metro-runtime
