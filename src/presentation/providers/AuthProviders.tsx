@@ -19,6 +19,7 @@ export const AuthProviders = ({ children }: PropsWithChildren) => {
       if (status === "authenticated") {
         navigation.reset({
           index: 0,
+          // Cambiar la ruta inicial para que hagas tus cambios
           routes: [{ name: "LandingScreen" }],
         });
       } else {
