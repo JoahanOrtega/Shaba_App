@@ -13,6 +13,9 @@ import { useColorScheme } from "react-native";
 import { StackNavigator } from "./src/presentation/navigation/StackNavigator";
 import { AuthProviders } from "./src/presentation/providers/AuthProviders";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   //identificar el tema
@@ -26,7 +29,7 @@ export default function App() {
       : theme["color-basic-100"];
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <GluestackUIProvider>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={theme}>
@@ -49,6 +52,6 @@ export default function App() {
           </NavigationContainer>
         </ApplicationProvider>
       </GluestackUIProvider>
-    </>
+    </QueryClientProvider>
   );
 }
