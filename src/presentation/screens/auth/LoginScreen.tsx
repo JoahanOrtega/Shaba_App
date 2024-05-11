@@ -81,7 +81,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout>
           <Button
             disabled={isPosting}
-            accessoryRight={<MyIcon name="arrow-forward-outline" white />}
+            accessoryRight={<MyIcon name="log-in-outline" white />}
             onPress={onLogin}
             // appearance="ghost"
           >

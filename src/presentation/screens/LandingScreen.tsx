@@ -22,6 +22,7 @@ export const LandingScreen = ({ navigation }: Props) => {
     <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>LandingScreen</Text>
       <Button
+        disabled={isLogout}
         accessoryLeft={<Icon name="log-out-outline" />}
         onPress={onLogout}
       >

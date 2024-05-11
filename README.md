@@ -27,6 +27,9 @@ npm install zustand
 
 npx expo install @react-native-async-storage/async-storage
 
+npm install --global expo-cli
+npm i @gluestack-ui/themed @gluestack-style/react react-native-svg@13.4.0
+
 # Configurar .env
 
 copia .env.template => .env
