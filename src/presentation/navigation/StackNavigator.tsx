@@ -10,6 +10,7 @@ import { FavoriteScreen } from "../screens/FavoriteScreen";
 import { SalesScreen } from "../screens/SalesScreen";
 import { UserProfileScreen } from "../screens/UserProfileScreen";
 import { LoadingScreen } from "../screens/LoadingScreen";
+import { ProductScreenAdmin } from "../screens/ProductScreenAdmin";
 
 export type RootStackParams = {
   LoadingScreen: undefined;
@@ -17,6 +18,7 @@ export type RootStackParams = {
   RegisterScreen: undefined;
   LandingScreen: undefined;
   ProductScreen: { productId: number };
+  ProductScreenAdmin: { productId: number };
   FavoriteScreen: undefined;
   SalesScreen: { userId: number };
   UserProfileScreen: { userId: number };
@@ -67,6 +69,7 @@ export const StackNavigator = () => {
         component={LandingScreen}
       />
       <Stack.Screen name="ProductScreen" component={ProductScreen} />
+      <Stack.Screen name="ProductScreenAdmin" component={ProductScreenAdmin} />
       <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} />
       <Stack.Screen name="SalesScreen" component={SalesScreen} />
       <Stack.Screen
