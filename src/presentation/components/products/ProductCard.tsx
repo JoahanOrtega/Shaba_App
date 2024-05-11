@@ -12,7 +12,7 @@ interface Props {
 export const ProductCard = ({ product }: Props) => {
   return (
     <Card style={{ flex: 1, margin: 3 }}>
-      {!product.img ? (
+      {product.img.length < 1 ? (
         <Image
           source={require("../../../assets/no-product-image.png")}
           style={{ width: "100%", height: 200 }}
@@ -23,7 +23,9 @@ export const ProductCard = ({ product }: Props) => {
           style={{ flex: 1, height: 200, width: "100%" }}
         />
       )}
-      <Text>{product.name}</Text>
+      <Text numberOfLines={2} style={{ textAlign: "center" }}>
+        {product.name}
+      </Text>
     </Card>
   );
 };
