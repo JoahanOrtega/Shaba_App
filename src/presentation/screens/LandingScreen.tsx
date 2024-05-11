@@ -6,6 +6,9 @@ import { useState } from "react";
 import { getProducts } from "../../actions/products/get-products";
 import { useQuery } from "@tanstack/react-query";
 import { ScrollView } from "@gluestack-ui/themed";
+import { MainLayout } from "../layouts/MainLayout";
+import { ScreenLoader } from "../components/ui/ScreenLoader";
+import { ProductList } from "../components/products/ProductList";
 
 interface Props extends StackScreenProps<RootStackParams, "LandingScreen"> {}
 
@@ -29,11 +32,9 @@ export const LandingScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ScrollView>
-        <Text>{JSON.stringify(products, null, 2)}</Text>
-      </ScrollView>
-    </Layout>
+    <MainLayout title="Shaba - Products" subTitle="Todo lo que buscas en moda">
+      {isLoading ? <ScreenLoader /> : <ProductList products={products} />}
+    </MainLayout>
   );
 };
 

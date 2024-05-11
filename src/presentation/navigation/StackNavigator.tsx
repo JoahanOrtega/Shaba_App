@@ -41,7 +41,7 @@ export const StackNavigator = () => {
         headerShown: false,
         headerStyle: {
           elevation: 0,
-          shadowColor: "transparent",
+          // shadowColor: "transparent",
         },
         // cardStyleInterpolator: fadeAnimation,
       }}
