@@ -47,7 +47,7 @@ export const AuthCheck = async () => {
     const { data } = await shabaApi.get<AuthResponse>("/check");
     return returnUserToken(data);
   } catch (error) {
-    console.log({ error });
+    console.log("(auth.ts)Hubo un error en el checking " + { error });
     return null;
   }
 };

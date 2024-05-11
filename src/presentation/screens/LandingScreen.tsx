@@ -3,12 +3,15 @@ import { Button, Icon, Layout, Text } from "@ui-kitten/components";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { useAuthStore } from "../store/auth/useAuthStore";
 import { useState } from "react";
+import { getProducts } from "../../actions/products/get-products";
 
 interface Props extends StackScreenProps<RootStackParams, "LandingScreen"> {}
 
 export const LandingScreen = ({ navigation }: Props) => {
   const { logout } = useAuthStore();
   const [isLogout, setIsLogout] = useState(false);
+
+  getProducts();
 
   const onLogout = async () => {
     setIsLogout(true);
