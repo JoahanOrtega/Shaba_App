@@ -6,9 +6,10 @@ import { RootStackParams } from "../navigation/StackNavigator";
 import { useAuthStore } from "../store/auth/useAuthStore";
 import axios from "axios";
 
-interface Props extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
+interface Props
+  extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
 
-const UserProfileScreen = ({ route }: Props) => {
+export const UserProfileScreen = ({ route }: Props) => {
   const userId = route.params.userId; // Obtener el ID del usuario de los parámetros de navegación
   const { user } = useAuthStore();
   const [formData, setFormData] = useState({
@@ -63,7 +64,9 @@ const UserProfileScreen = ({ route }: Props) => {
           onPress: async () => {
             try {
               // Lógica para eliminar la cuenta del usuario utilizando Axios
-              const response = await axios.delete(`http://localhost:8000/api/users/${userId}`);
+              const response = await axios.delete(
+                `http://localhost:8000/api/users/${userId}`
+              );
               console.log(response.data); // Puedes manejar la respuesta según lo necesites
               // También puedes agregar una navegación aquí después de eliminar la cuenta
               // navigation.navigate("LoginScreen");
@@ -135,5 +138,3 @@ const UserProfileScreen = ({ route }: Props) => {
     </Layout>
   );
 };
-
-export default UserProfileScreen;
