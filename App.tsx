@@ -11,6 +11,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
 import { StackNavigator } from "./src/presentation/navigation/StackNavigator";
+import { AuthProviders } from "./src/presentation/providers/AuthProviders";
 
 export default function App() {
   //identificar el tema
@@ -40,7 +41,9 @@ export default function App() {
             },
           }}
         >
-          <StackNavigator />
+          <AuthProviders>
+            <StackNavigator />
+          </AuthProviders>
         </NavigationContainer>
       </ApplicationProvider>
     </>

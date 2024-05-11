@@ -17,7 +17,7 @@ const shabaApi = axios.create({
   },
 });
 
-// TODO Interceptors
+// Interceptors
 //help me to read from my physic storage (device) adjuntar our access token
 shabaApi.interceptors.request.use(async (config) => {
   const token = await StorageAdapter.getItem("token");

@@ -23,7 +23,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   const onLogin = async () => {
     console.log("entre al metodo onlogin");
     if (form.email.length === 0 || form.password.length === 0) {
-      console.log("esta vacio el formulario nmms");
+      console.log("esta vacio el formulario");
       return;
     }
     setIsPosting(true);

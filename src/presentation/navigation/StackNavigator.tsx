@@ -9,8 +9,10 @@ import { ProductScreen } from "../screens/ProductScreen";
 import { FavoriteScreen } from "../screens/FavoriteScreen";
 import { SalesScreen } from "../screens/SalesScreen";
 import { UserProfileScreen } from "../screens/UserProfileScreen";
+import { LoadingScreen } from "../screens/LoadingScreen";
 
 export type RootStackParams = {
+  LoadingScreen: undefined;
   LoginScreen: undefined;
   RegisterScreen: undefined;
   LandingScreen: undefined;
@@ -34,7 +36,7 @@ const fadeAnimation: StackCardStyleInterpolator = ({ current }) => {
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="LoginScreen"
+      initialRouteName="LoadingScreen"
       screenOptions={{
         headerShown: false,
         headerStyle: {
@@ -44,6 +46,11 @@ export const StackNavigator = () => {
         // cardStyleInterpolator: fadeAnimation,
       }}
     >
+      <Stack.Screen
+        options={{ cardStyleInterpolator: fadeAnimation }}
+        name="LoadingScreen"
+        component={LoadingScreen}
+      />
       <Stack.Screen
         options={{ cardStyleInterpolator: fadeAnimation }}
         name="LoginScreen"

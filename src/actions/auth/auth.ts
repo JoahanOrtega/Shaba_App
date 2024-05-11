@@ -1,7 +1,14 @@
 //actions to login and register
 import { shabaApi } from "../../config/api/shabaApi";
 import { User } from "../../domain/entities/user";
-import type { AuthResponse } from "../../infrastructure/interfaces/auth.responses";
+import type {
+  AuthLogoutResponse,
+  AuthResponse,
+} from "../../infrastructure/interfaces/auth.responses";
+
+const returnLogoutSuccess = (data: AuthLogoutResponse) => {
+  return data.status === "200";
+};
 
 const returnUserToken = (data: AuthResponse) => {
   const user: User = {
@@ -29,6 +36,26 @@ export const AuthLogin = async (email: string, password: string) => {
       password,
     });
     return returnUserToken(data);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const AuthCheck = async () => {
+  try {
+    const { data } = await shabaApi.get<AuthResponse>("/check");
+    return returnUserToken(data);
+  } catch (error) {
+    console.log({ error });
+    return null;
+  }
+};
+
+export const AuthLogout = async () => {
+  try {
+    const { data } = await shabaApi.get<AuthLogoutResponse>("/logout");
+    return returnLogoutSuccess(data);
   } catch (error) {
     console.log(error);
     return null;
