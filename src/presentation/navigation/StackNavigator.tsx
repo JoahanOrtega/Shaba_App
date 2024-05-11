@@ -8,7 +8,7 @@ import { LandingScreen } from "../screens/LandingScreen";
 import { ProductScreen } from "../screens/ProductScreen";
 import { FavoriteScreen } from "../screens/FavoriteScreen";
 import { SalesScreen } from "../screens/SalesScreen";
-import { UserProfileScreen } from "../screens/UserProfileScreen";
+import UserProfileScreen from "../screens/UserProfileScreen";
 
 export type RootStackParams = {
   LoginScreen: undefined;
