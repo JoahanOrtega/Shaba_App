@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import { Layout, Text } from "@ui-kitten/components";
+import { Layout, Text,Button } from "@ui-kitten/components";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { useAuthStore } from "../store/auth/useAuthStore";
 import { useState } from "react";
@@ -30,10 +30,13 @@ export const LandingScreen = ({ navigation }: Props) => {
 
     console.log(wasSuccessful);
   };
-
+  const handleLogin = () => {
+    navigation.navigate("LoginScreen"); // Navigate to LoginScreen
+  };
   return (
     <MainLayout title="Shaba - Products" subTitle="Todo lo que buscas en moda">
       {isLoading ? <ScreenLoader /> : <ProductList products={products} />}
+      <Button onPress={handleLogin}>Iniciar sesión</Button>
     </MainLayout>
   );
 };
