@@ -4,13 +4,12 @@ import { ScrollView, Alert } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { useAuthStore } from "../store/auth/useAuthStore";
-import axios from "axios";
+import { getUser,updateUser,deleteUser } from "../../actionsUser/user";
 
-interface Props
-  extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
+interface Props extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
 
 export const UserProfileScreen = ({ route }: Props) => {
-  const userId = route.params.userId; // Obtener el ID del usuario de los parámetros de navegación
+  const userId = route.params.userId;
   const { user } = useAuthStore();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -24,7 +23,7 @@ export const UserProfileScreen = ({ route }: Props) => {
 
   useEffect(() => {
     if (user) {
-      // Si el usuario está autenticado, establece los datos del usuario en el formulario
+      console.log("Datos del usuario cargados:", user);
       setFormData({
         firstName: user.first_name || "",
         lastName: user.last_name || "",
@@ -44,13 +43,25 @@ export const UserProfileScreen = ({ route }: Props) => {
     }));
   };
 
-  const handleSubmit = () => {
-    // Aquí puedes enviar formData al servidor para actualizar los datos del usuario
-    console.log(formData);
+  const handleSubmit = async () => {
+    try {
+      console.log("Enviando datos de usuario para actualizar:", formData);
+      const updatedUser = await updateUser(userId, formData);
+      console.log("Respuesta del servidor después de la actualización:", updatedUser);
+      if (updatedUser) {
+        Alert.alert("Éxito", "Los datos del usuario se actualizaron correctamente");
+      } else {
+        throw new Error("No se pudo actualizar los datos del usuario");
+      }
+    } catch (error) {
+      console.error("Error al actualizar datos del usuario:", error);
+      Alert.alert("Error", "No se pudo actualizar los datos del usuario");
+    }
   };
+  
+  
 
   const handleDeleteAccount = () => {
-    // Confirmar si el usuario realmente desea eliminar su cuenta
     Alert.alert(
       "Eliminar Cuenta",
       "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.",
@@ -63,13 +74,10 @@ export const UserProfileScreen = ({ route }: Props) => {
           text: "Eliminar",
           onPress: async () => {
             try {
-              // Lógica para eliminar la cuenta del usuario utilizando Axios
-              const response = await axios.delete(
-                `http://localhost:8000/api/users/${userId}`
-              );
-              console.log(response.data); // Puedes manejar la respuesta según lo necesites
-              // También puedes agregar una navegación aquí después de eliminar la cuenta
-              // navigation.navigate("LoginScreen");
+              // Eliminar la cuenta del usuario
+              await deleteUser(userId);
+              Alert.alert("Éxito", "La cuenta del usuario se eliminó correctamente");
+              // Navegar a la pantalla de inicio de sesión u otra pantalla apropiada
             } catch (error) {
               console.error("Error al eliminar la cuenta del usuario:", error);
               Alert.alert("Error", "No se pudo eliminar la cuenta del usuario");
@@ -131,6 +139,7 @@ export const UserProfileScreen = ({ route }: Props) => {
 
         {/* Botones de guardar y eliminar */}
         <Button onPress={handleSubmit}>Guardar Cambios</Button>
+        <br></br>
         <Button onPress={handleDeleteAccount} status="danger">
           Eliminar Cuenta
         </Button>

@@ -31,7 +31,15 @@ export const LoginScreen = ({ navigation }: Props) => {
     setIsPosting(false);
 
     console.log(wasSuccessful);
-    if (wasSuccessful) return;
+    if (wasSuccessful) {
+      const user = useAuthStore.getState().user;
+      if (user) {
+        // Navegar a UserProfileScreen y pasar el ID del usuario como parámetro
+        navigation.navigate("UserProfileScreen", { userId: user.id });
+      }
+      return;
+    }
+    console.log("termino la validacion");
     console.log("termino la validacion");
     Alert.alert("Error", "Usuario o contraseña incorrectos");
   };
