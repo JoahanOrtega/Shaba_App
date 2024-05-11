@@ -2,13 +2,15 @@ import React from "react";
 
 import { MainLayout } from "../layouts/MainLayout";
 import { ScrollView, Text } from "@gluestack-ui/themed";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { getProductById } from "../../actions/products/get-product-by-id";
 import { Layout } from "@ui-kitten/components";
 import { FlatList } from "react-native";
 import { FadeInImage } from "../components/ui/FadeInImage";
+import { Product } from "../../domain/entities/product";
+import { updateCreateProduct } from "../../actions/products/update-create-product";
 
 interface Props extends StackScreenProps<RootStackParams, "ProductScreen"> {}
 
@@ -24,6 +26,8 @@ export const ProductScreen = ({ route }: Props) => {
     queryKey: ["product", productId],
     queryFn: () => getProductById(productId),
   });
+
+  //useMutation
 
   if (!product) {
     return <MainLayout title="Cargando...." />;
