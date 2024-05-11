@@ -15,10 +15,16 @@ export const getUser = async (userId: number): Promise<Data | null> => {
 };
 
 // Actualizar los datos de un usuario
-export const updateUser = async (userId: number, userData: Partial<Data>): Promise<Data | null> => {
+export const updateUser = async (
+  userId: number,
+  userData: Partial<Data>
+): Promise<Data | null> => {
   try {
     const response = await shabaApi.put<Data>(`/users/${userId}`, userData);
-    console.log("Respuesta del servidor después de actualizar usuario:", response.data);
+    console.log(
+      "Respuesta del servidor después de actualizar usuario:",
+      response.data
+    );
     return response.data;
   } catch (error) {
     console.error("Error al actualizar datos del usuario:", error);
@@ -37,4 +43,3 @@ export const deleteUser = async (userId: number): Promise<void> => {
     throw error; // Propagar el error para manejarlo donde sea necesario
   }
 };
-

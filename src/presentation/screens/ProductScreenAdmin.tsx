@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 import { MainLayout } from "../layouts/MainLayout";
 // import { FlatList, ScrollView } from "@gluestack-ui/themed";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { getProductById } from "../../actions/products/get-product-by-id";
@@ -16,9 +16,10 @@ import {
 } from "@ui-kitten/components";
 import { FlatList, ScrollView } from "react-native";
 import { FadeInImage } from "../components/ui/FadeInImage";
-import { Size } from "../../domain/entities/product";
+import { Product, Size } from "../../domain/entities/product";
 import { MyIcon } from "../components/ui/MyIcon";
 import { Formik } from "formik";
+import { updateCreateProduct } from "../../actions/products/update-create-product";
 
 const sizes: Size[] = [Size.L, Size.M, Size.S];
 
@@ -40,11 +41,27 @@ export const ProductScreenAdmin = ({ route }: Props) => {
     queryFn: () => getProductById(productIdRef.current),
   });
 
+  //useMutation
+  const mutation = useMutation({
+    mutationFn: (data: Product) =>
+      updateCreateProduct({ ...data, id: productIdRef.current }),
+    onSuccess(data: Product) {
+      productIdRef.current = data.id; //creacion es util
+      console.log("(ProductScreenAdmin) Success");
+    },
+  });
+
   if (!product) {
     return <MainLayout title="Cargando...." />;
   }
   return (
-    <Formik initialValues={product} onSubmit={(values) => console.log(values)}>
+    <Formik
+      initialValues={product}
+      // validateeeee (aqui valida el formulario)
+
+      // onSubmit={mutation.mutate}
+      onSubmit={(values) => mutation.mutate(values)}
+    >
       {/* Renderizando el componente MainLayout dentro de Formik */}
       {({ handleChange, handleSubmit, values, errors, setFieldValue }) => (
         <MainLayout title={values.name}>
@@ -104,16 +121,18 @@ export const ProductScreenAdmin = ({ route }: Props) => {
               }}
             >
               <Input
-                label={"Stock"}
+                label={"Price"}
                 style={{ flex: 1 }}
                 value={values.price}
                 onChangeText={handleChange("price")}
+                keyboardType="number-pad"
               />
               <Input
-                label={"Precio"}
+                label={"Stock"}
                 style={{ flex: 1 }}
                 value={values.available_quantity.toString()}
                 onChangeText={handleChange("values")}
+                keyboardType="numeric"
               />
             </Layout>
 
@@ -143,7 +162,8 @@ export const ProductScreenAdmin = ({ route }: Props) => {
             {/* Save button */}
             <Button
               accessoryLeft={<MyIcon name={"save-outline"} white />}
-              onPress={() => console.log("guardanding")}
+              onPress={() => handleSubmit()}
+              disabled={mutation.isPending}
               style={{ margin: 15 }}
             >
               Guardar
