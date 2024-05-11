@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { User } from "../../../domain/entities/user";
 import { AuthStatus } from "../../../infrastructure/interfaces/auth.status";
 import { AuthLogin } from "../../../actions/auth/auth";
+import { StorageAdapter } from "../../../config/adapters/storage-adapter";
 
 export interface AuthState {
   status: AuthStatus;
@@ -23,8 +24,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       return false;
     }
 
-    // TODO: save token and user in storage
-    console.log({ resp });
+    // save token and user in storage
+    await StorageAdapter.setItem("token", resp.token);
+    // const storedToken = await StorageAdapter.getItem("token");
+    // console.log({ storedToken });
 
     set({ status: "authenticated", token: resp.token, user: resp.user });
     return true;

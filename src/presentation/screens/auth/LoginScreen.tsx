@@ -12,6 +12,7 @@ interface Props extends StackScreenProps<RootStackParams, "LoginScreen"> {}
 export const LoginScreen = ({ navigation }: Props) => {
   const { login } = useAuthStore();
 
+  const [isPosting, setIsPosting] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -25,7 +26,9 @@ export const LoginScreen = ({ navigation }: Props) => {
       console.log("esta vacio el formulario nmms");
       return;
     }
+    setIsPosting(true);
     const wasSuccessful = await login(form.email, form.password);
+    setIsPosting(false);
 
     console.log(wasSuccessful);
     if (wasSuccessful) return;
@@ -77,6 +80,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         {/* Button */}
         <Layout>
           <Button
+            disabled={isPosting}
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}
             onPress={onLogin}
             // appearance="ghost"

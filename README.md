@@ -25,6 +25,8 @@ npm install axios
 
 npm install zustand
 
+npx expo install @react-native-async-storage/async-storage
+
 # Configurar .env
 
 copia .env.template => .env
