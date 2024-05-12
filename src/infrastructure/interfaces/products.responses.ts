@@ -3,7 +3,7 @@ export interface ShabaProduct {
   name: string;
   description: string;
   price: string;
-  id_subcategory: number;
+  id_category: number;
   size: Size;
   color: string;
   available_quantity: number;

@@ -6,18 +6,19 @@ export const updateCreateProduct = (product: Partial<Product>) => {
   product.available_quantity = isNaN(Number(product.available_quantity))
     ? 0
     : Number(product.available_quantity); // Esto puede dar NaN
-  product.id_subcategory = isNaN(Number(product.id_subcategory))
+  product.id_category = isNaN(Number(product.id_category))
     ? 0
-    : Number(product.id_subcategory); // Esto puede dar NaN
+    : Number(product.id_category); // Esto puede dar NaN
 
   //   Si se manda un ID significa que se esta actualizando un producto
   //   Por ende, ya existe
 
-  if (product.id) {
+  if (product.id && product.id !== -1) {
     return updateProduct(product);
   }
 
-  throw new Error("Creacion no esta implementado");
+  console.log("(update-create-product) Entrandoa createProduct");
+  return createProduct(product);
 };
 
 // TODO: revisar que estoy mandando
@@ -28,13 +29,38 @@ const updateProduct = async (product: Partial<Product>) => {
 
   //   Aqui estoy separando lo que no voy a subir a la BD
   product.updated_at = currentDate;
-  const { id, img, id_subcategory, created_at, ...rest } = product;
+  const { id, img, id_category, created_at, ...rest } = product;
 
   try {
     console.log("lo que mando al put");
     console.log({ ...rest });
     const { data } = await shabaApi.put(`/products/${id}`, {
-      id_subcategory: id_subcategory,
+      id_category: id_category,
+      ...rest,
+    });
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.log(error.response?.data);
+    }
+
+    throw new Error("Error al actualizar product");
+  }
+};
+
+const createProduct = async (product: Partial<Product>) => {
+  const currentDate = new Date();
+  console.log("(update-create-product)");
+  console.log({ product });
+
+  //   Aqui estoy separando lo que no voy a subir a la BD
+  product.updated_at = currentDate;
+  const { id, img, ...rest } = product;
+
+  try {
+    console.log("lo que mando al put");
+    console.log({ ...rest });
+    const { data } = await shabaApi.post(`/products`, {
       ...rest,
     });
     return data;

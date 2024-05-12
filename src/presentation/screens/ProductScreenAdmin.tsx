@@ -1,30 +1,27 @@
-import React, { useRef } from "react";
-
-import { MainLayout } from "../layouts/MainLayout";
-// import { FlatList, ScrollView } from "@gluestack-ui/themed";
-import {
-  useMutation,
-  useQuery,
-  QueryClient,
-  useQueryClient,
-} from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Image, ScrollView } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../navigation/StackNavigator";
+import { MainLayout } from "../layouts/MainLayout";
 import { getProductById } from "../../actions/products/get-product-by-id";
-import {
-  Button,
-  ButtonGroup,
-  Input,
-  Layout,
-  Text,
-  useTheme,
-} from "@ui-kitten/components";
-import { Alert, FlatList, ScrollView } from "react-native";
 import { FadeInImage } from "../components/ui/FadeInImage";
 import { Product, Size } from "../../domain/entities/product";
 import { MyIcon } from "../components/ui/MyIcon";
-import { Formik } from "formik";
 import { updateCreateProduct } from "../../actions/products/update-create-product";
+import { Formik } from "formik";
+import {
+  Button,
+  ButtonGroup,
+  IndexPath,
+  Input,
+  Layout,
+  Select,
+  SelectItem,
+  Text,
+  useTheme,
+} from "@ui-kitten/components";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCategories } from "../../actions/category/get-categories";
 
 const sizes: Size[] = [Size.L, Size.M, Size.S];
 
@@ -32,6 +29,15 @@ interface Props
   extends StackScreenProps<RootStackParams, "ProductScreenAdmin"> {}
 
 export const ProductScreenAdmin = ({ route }: Props) => {
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<
+    IndexPath | IndexPath[]
+  >(new IndexPath(0));
+
+  const { data: categories } = useQuery({
+    queryKey: ["categories"], // Clave para identificar la consulta
+    queryFn: getCategories, // Función que realiza la consulta
+  });
+
   //useQuery
   //useMutation <= similar a useQuery pero esta dedicado a hacer
   //                Posteos, Actualizaciones y Eliminaciones
@@ -64,6 +70,15 @@ export const ProductScreenAdmin = ({ route }: Props) => {
     },
   });
 
+  useEffect(() => {
+    if (product && product.id_category) {
+      const categoryIndex = categories.findIndex(
+        (category) => category.id === product.id_category
+      );
+      setSelectedCategoryIndex(new IndexPath(categoryIndex));
+    }
+  }, [product, categories]);
+
   if (!product) {
     return <MainLayout title="Cargando...." />;
   }
@@ -81,10 +96,20 @@ export const ProductScreenAdmin = ({ route }: Props) => {
           <ScrollView style={{ flex: 1 }}>
             {/* Imagen */}
             <Layout>
-              <FadeInImage
-                uri={values.img}
-                style={{ width: "100%", height: 300 }}
-              />
+              {values.img === "" || values.img === null ? (
+                <Image
+                  source={require("../../assets/no-product-image.png")}
+                  style={{
+                    width: "100%",
+                    height: 300,
+                  }}
+                />
+              ) : (
+                <FadeInImage
+                  uri={values.img}
+                  style={{ width: "100%", height: 300 }}
+                />
+              )}
               {/* <FlatList
             data={product.img}
             keyExtractor={(item, index) => `${item}-${index}`}
@@ -147,6 +172,23 @@ export const ProductScreenAdmin = ({ route }: Props) => {
                 onChangeText={handleChange("available_quantity")}
                 keyboardType="numeric"
               />
+            </Layout>
+
+            {/* Select de categorías */}
+            <Layout style={{ marginHorizontal: 10 }}>
+              <Text>Category:</Text>
+              <Select
+                selectedIndex={selectedCategoryIndex}
+                onSelect={(index) => {
+                  setSelectedCategoryIndex(index);
+                  const selectedCategory = categories[index.row];
+                  setFieldValue("id_category", selectedCategory.id);
+                }}
+              >
+                {categories.map((category) => (
+                  <SelectItem key={category.id} title={category.name} />
+                ))}
+              </Select>
             </Layout>
 
             {/* Selectores */}

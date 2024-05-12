@@ -8,12 +8,21 @@ import { MainLayout } from "../layouts/MainLayout";
 import { ScreenLoader } from "../components/ui/ScreenLoader";
 import { ProductList } from "../components/products/ProductList";
 import { FAB } from "../components/ui/FAB";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { StorageAdapter } from "../../config/adapters/storage-adapter";
 
-interface Props extends StackScreenProps<RootStackParams, "LandingScreen"> {}
-
-export const LandingScreen = ({ navigation }: Props) => {
+export const LandingScreen = () => {
   const { logout } = useAuthStore();
+
   const [isLogout, setIsLogout] = useState(false);
+
+  const onLogout = async () => {
+    setIsLogout(true);
+    const wasSuccessful = await logout();
+    setIsLogout(false);
+  };
+
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const { isLoading, data: products = [] } = useQuery({
     // queryKey: ["products", 0],
@@ -22,14 +31,9 @@ export const LandingScreen = ({ navigation }: Props) => {
     queryFn: () => getProducts(),
   });
 
-  const onLogout = async () => {
-    setIsLogout(true);
-    const wasSuccessful = await logout();
-    setIsLogout(false);
-  };
-  const handleLogin = () => {
-    navigation.navigate("LoginScreen"); // Navigate to LoginScreen
-  };
+  // const handleLogin = () => {
+  //   navigation.navigate("LoginScreen"); // Navigate to LoginScreen
+  // };
   return (
     <>
       <MainLayout
@@ -40,12 +44,30 @@ export const LandingScreen = ({ navigation }: Props) => {
       </MainLayout>
       <FAB
         iconName="plus-outline"
-        onPress={() => {}}
+        onPress={() =>
+          navigation.navigate("ProductScreenAdmin", { productId: -1 })
+        }
         style={{ position: "absolute", bottom: 100, right: 20 }}
       />
       <FAB
         iconName="person-outline"
-        onPress={() => {}}
+        onPress={() => {
+          // onLogout();
+
+          const consultarUserId = async () => {
+            try {
+              const storedUserId = await StorageAdapter.getItem("userId");
+              return storedUserId;
+              // Aquí puedes hacer lo que necesites con el valor almacenado
+            } catch (error) {
+              console.error("Error al obtener el userId:", error);
+              return "";
+            }
+          };
+          const idString = consultarUserId().toString();
+          const userId: number = parseInt(idString);
+          navigation.navigate("UserProfileScreen", { userId: userId });
+        }}
         style={{ position: "absolute", bottom: 100, left: 20 }}
       />
     </>

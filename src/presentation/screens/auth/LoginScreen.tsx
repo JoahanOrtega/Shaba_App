@@ -6,6 +6,7 @@ import { RootStackParams } from "../../navigation/StackNavigator";
 import { MyIcon } from "../../components/ui/MyIcon";
 import { useState } from "react";
 import { useAuthStore } from "../../store/auth/useAuthStore";
+import { StorageAdapter } from "../../../config/adapters/storage-adapter";
 
 interface Props extends StackScreenProps<RootStackParams, "LoginScreen"> {}
 
@@ -31,11 +32,12 @@ export const LoginScreen = ({ navigation }: Props) => {
 
     console.log(wasSuccessful);
     if (wasSuccessful) {
-      // const user = useAuthStore.getState().user;
-      // if (user) {
-      //   navigation.navigate("UserProfileScreen", { userId: user.id });
-      // }
-      console.log("(LoginScreen) Login was succesfull");
+      const user = useAuthStore.getState().user;
+      if (user) {
+        await StorageAdapter.setItem("userId", user.id.toString());
+        const storedToken = await StorageAdapter.getItem("userId");
+      }
+      console.log("(LoginScreen) Login was succesful");
       return;
     }
 
