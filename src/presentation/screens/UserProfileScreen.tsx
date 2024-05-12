@@ -12,7 +12,8 @@ interface Props
 
 export const UserProfileScreen = ({ route }: Props) => {
   const userId = route.params.userId; // Obtener el ID del usuario de los parámetros de navegación
-  const { user } = useAuthStore(); // Obtener el usuario y el token del estado global
+  console.log("estoy dentor de userprofilescreen con id " + userId);
+  const { user, logout } = useAuthStore(); // Obtener el usuario y el token del estado global
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -57,6 +58,7 @@ export const UserProfileScreen = ({ route }: Props) => {
           "Éxito",
           "Los datos del usuario se actualizaron correctamente"
         );
+        await logout();
       } else {
         throw new Error("No se pudo actualizar los datos del usuario");
       }

@@ -35,7 +35,7 @@ export const AuthLogin = async (email: string, password: string) => {
       email,
       password,
     });
-    return returnUserToken(data);
+    if (data.status !== "400") return returnUserToken(data);
   } catch (error) {
     console.log(error);
     return null;

@@ -50,25 +50,32 @@ export const LandingScreen = () => {
         style={{ position: "absolute", bottom: 100, right: 20 }}
       />
       <FAB
+        iconName="log-out-outline"
+        onPress={() => {
+          onLogout();
+          // const user = useAuthStore.getState().user;
+          // console.log(user);
+          // if (user) {
+          //   // Navegar a UserProfileScreen y pasar el ID del usuario como parámetro
+          //   console.log("voy a enviar el id de " + user.id);
+          //   navigation.navigate("UserProfileScreen", { userId: user.id });
+          // }
+        }}
+        style={{ position: "absolute", bottom: 100, left: 20 }}
+      />
+      <FAB
         iconName="person-outline"
         onPress={() => {
           // onLogout();
-
-          const consultarUserId = async () => {
-            try {
-              const storedUserId = await StorageAdapter.getItem("userId");
-              return storedUserId;
-              // Aquí puedes hacer lo que necesites con el valor almacenado
-            } catch (error) {
-              console.error("Error al obtener el userId:", error);
-              return "";
-            }
-          };
-          const idString = consultarUserId().toString();
-          const userId: number = parseInt(idString);
-          navigation.navigate("UserProfileScreen", { userId: userId });
+          const user = useAuthStore.getState().user;
+          console.log(user);
+          if (user) {
+            // Navegar a UserProfileScreen y pasar el ID del usuario como parámetro
+            console.log("voy a enviar el id de " + user.id);
+            navigation.navigate("UserProfileScreen", { userId: user.id });
+          }
         }}
-        style={{ position: "absolute", bottom: 100, left: 20 }}
+        style={{ position: "absolute", bottom: 200, left: 20 }}
       />
     </>
   );
