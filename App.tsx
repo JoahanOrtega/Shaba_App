@@ -22,7 +22,7 @@ export default function App() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? eva.dark : eva.light;
 
-  console.log("(App.tsx) It is lightMode?" + colorScheme === "light");
+  console.log("(App.tsx) It is lightMode? " + (colorScheme === "light"));
   const backGroundColor =
     colorScheme === "dark"
       ? theme["color-basic-800"]

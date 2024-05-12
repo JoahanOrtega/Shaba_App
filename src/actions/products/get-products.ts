@@ -8,9 +8,6 @@ export const getProducts = async () => {
     const products = data.map((shabaProduct) =>
       ProductMapper.shabaProducToEntity(shabaProduct)
     );
-    console.log("(get-products.ts)");
-    console.log(products[1]);
-    console.log("(/get-products.ts)");
 
     return products;
   } catch (error) {

@@ -19,7 +19,7 @@ import {
   Text,
   useTheme,
 } from "@ui-kitten/components";
-import { FlatList, ScrollView } from "react-native";
+import { Alert, FlatList, ScrollView } from "react-native";
 import { FadeInImage } from "../components/ui/FadeInImage";
 import { Product, Size } from "../../domain/entities/product";
 import { MyIcon } from "../components/ui/MyIcon";
@@ -54,7 +54,7 @@ export const ProductScreenAdmin = ({ route }: Props) => {
       updateCreateProduct({ ...data, id: productIdRef.current }),
     onSuccess(data: Product) {
       productIdRef.current = data.id; //creacion es util
-      console.log("(ProductScreenAdmin) Success");
+      Alert.alert("Update", "the product updated successfuly!");
       // al hacer cambios a la bd invalidar lo que se esta mostrando en (LandingScreen)
       // Cuando haga la invalidacion se va a volver a cargar la data
       QueryClient.invalidateQueries({ queryKey: ["products", "infinite"] });

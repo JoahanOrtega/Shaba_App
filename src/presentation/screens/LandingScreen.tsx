@@ -1,11 +1,9 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import { Layout, Text, Button } from "@ui-kitten/components";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { useAuthStore } from "../store/auth/useAuthStore";
 import { useState } from "react";
 import { getProducts } from "../../actions/products/get-products";
 import { useQuery } from "@tanstack/react-query";
-import { ScrollView } from "@gluestack-ui/themed";
 import { MainLayout } from "../layouts/MainLayout";
 import { ScreenLoader } from "../components/ui/ScreenLoader";
 import { ProductList } from "../components/products/ProductList";
@@ -28,8 +26,6 @@ export const LandingScreen = ({ navigation }: Props) => {
     setIsLogout(true);
     const wasSuccessful = await logout();
     setIsLogout(false);
-
-    console.log(wasSuccessful);
   };
   const handleLogin = () => {
     navigation.navigate("LoginScreen"); // Navigate to LoginScreen
