@@ -20,7 +20,7 @@ export const AuthProviders = ({ children }: PropsWithChildren) => {
         navigation.reset({
           index: 0,
           // Cambiar la ruta inicial para que hagas tus cambios
-          routes: [{ name: "LandingScreen" }],
+          routes: [{ name: "LoginScreen" }],
         });
       } else {
         navigation.reset({

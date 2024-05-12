@@ -45,6 +45,8 @@ export const UserProfileScreen = ({ route }: Props) => {
 
   const handleSubmit = async () => {
     try {
+      //const updatedFormData = { ...formData, lastName: 'Labadiu' }; // Asegúrate de actualizar el apellido en los datos del formulario
+      //console.log("Enviando datos de usuario para actualizar:", updatedFormData);
       console.log("Enviando datos de usuario para actualizar:", formData);
       const updatedUser = await updateUser(userId, formData, token); // Pasa el token a updateUser
       console.log("Respuesta del servidor después de la actualización:", updatedUser);
@@ -58,32 +60,18 @@ export const UserProfileScreen = ({ route }: Props) => {
       Alert.alert("Error", "No se pudo actualizar los datos del usuario");
     }
   };
+  const [deleteSuccess, setDeleteSuccess] = useState(false); // Estado para controlar si se eliminó la cuenta con éxito
 
   const handleDeleteAccount = async () => {
-    Alert.alert(
-      "Eliminar Cuenta",
-      "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.",
-      [
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
-        {
-          text: "Eliminar",
-          onPress: async () => {
-            try {
-              await deleteUser(userId, token); // Pasa el token a deleteUser
-              Alert.alert("Éxito", "La cuenta del usuario se eliminó correctamente");
-            } catch (error) {
-              console.error("Error al eliminar la cuenta del usuario:", error);
-              Alert.alert("Error", "No se pudo eliminar la cuenta del usuario");
-            }
-          },
-          style: "destructive",
-        },
-      ]
-    );
+    try {
+      await deleteUser(userId, token);
+      setDeleteSuccess(true); // Cambia el estado a true si la eliminación fue exitosa
+    } catch (error) {
+      console.error("Error al eliminar la cuenta del usuario:", error);
+      Alert.alert("Error", "No se pudo eliminar la cuenta del usuario");
+    }
   };
+  
 
   return (
     <Layout style={{ flex: 1, padding: 20 }}>
@@ -135,9 +123,16 @@ export const UserProfileScreen = ({ route }: Props) => {
 
         {/* Botones de guardar y eliminar */}
         <Button onPress={handleSubmit}>Guardar Cambios</Button>
+        <br></br>
         <Button onPress={handleDeleteAccount} status="danger">
           Eliminar Cuenta
         </Button>
+          {/* Mensaje de éxito si se eliminó la cuenta */}
+      {deleteSuccess && (
+        <Text style={{ color: "white", marginTop: 10 }}>
+          La cuenta del usuario se eliminó correctamente
+        </Text>
+      )}
       </ScrollView>
     </Layout>
   );

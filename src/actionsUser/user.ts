@@ -21,6 +21,7 @@ export const updateUser = async (userId: number, userData: Partial<Data>, token:
 // deleteUser en user.ts
 export const deleteUser = async (userId: number, token: string): Promise<void> => {
   try {
+    console.log("Intentando eliminar usuario con ID:", userId);
     await shabaApi.delete(`/users/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
