@@ -11,7 +11,7 @@ import { FAB } from "../components/ui/FAB";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { StorageAdapter } from "../../config/adapters/storage-adapter";
 
-export const LandingScreen = () => {
+export const LandingScreenAdmin = () => {
   const { logout } = useAuthStore();
 
   const [isLogout, setIsLogout] = useState(false);
@@ -42,13 +42,13 @@ export const LandingScreen = () => {
       >
         {isLoading ? <ScreenLoader /> : <ProductList products={products} />}
       </MainLayout>
-      {/* <FAB
+      <FAB
         iconName="plus-outline"
         onPress={() =>
           navigation.navigate("ProductScreenAdmin", { productId: -1 })
         }
         style={{ position: "absolute", bottom: 100, right: 20 }}
-      /> */}
+      />
       <FAB
         iconName="log-out-outline"
         onPress={() => {

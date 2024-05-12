@@ -5,12 +5,15 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { useAuthStore } from "../store/auth/useAuthStore";
 import { updateUser, deleteUser } from "../../actionsUser/user"; // Importa las funciones updateUser y deleteUser
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 // import { RootBottomParams } from "../navigation/BottomTabNavigator";
 
 interface Props
   extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
 
 export const UserProfileScreen = ({ route }: Props) => {
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
+
   const userId = route.params.userId; // Obtener el ID del usuario de los parámetros de navegación
   console.log("estoy dentor de userprofilescreen con id " + userId);
   const { user, logout } = useAuthStore(); // Obtener el usuario y el token del estado global
@@ -58,7 +61,9 @@ export const UserProfileScreen = ({ route }: Props) => {
           "Éxito",
           "Los datos del usuario se actualizaron correctamente"
         );
-        await logout();
+
+        navigation.navigate("LandingScreen");
+        // await logout();
       } else {
         throw new Error("No se pudo actualizar los datos del usuario");
       }

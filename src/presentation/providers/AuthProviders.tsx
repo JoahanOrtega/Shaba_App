@@ -6,8 +6,7 @@ import { useAuthStore } from "../store/auth/useAuthStore";
 
 export const AuthProviders = ({ children }: PropsWithChildren) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
-
-  const { checkStatus, status } = useAuthStore();
+  const { checkStatus, status, user } = useAuthStore();
 
   useEffect(() => {
     checkStatus();
@@ -17,11 +16,19 @@ export const AuthProviders = ({ children }: PropsWithChildren) => {
     console.log("(AuthProvider) status is: " + status);
     if (status !== "checking") {
       if (status === "authenticated") {
-        navigation.reset({
-          index: 0,
-          // Cambiar la ruta inicial para que hagas tus cambios
-          routes: [{ name: "LandingScreen" }],
-        });
+        if (user?.id !== undefined && user.id === 26) {
+          navigation.reset({
+            index: 0,
+            // Cambiar la ruta inicial para que hagas tus cambios
+            routes: [{ name: "LandingScreenAdmin" }],
+          });
+        } else {
+          navigation.reset({
+            index: 0,
+            // Cambiar la ruta inicial para que hagas tus cambios
+            routes: [{ name: "LandingScreen" }],
+          });
+        }
       } else {
         navigation.reset({
           index: 0,

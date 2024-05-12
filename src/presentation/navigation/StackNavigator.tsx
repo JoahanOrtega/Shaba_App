@@ -11,12 +11,14 @@ import { SalesScreen } from "../screens/SalesScreen";
 import { UserProfileScreen } from "../screens/UserProfileScreen";
 import { LoadingScreen } from "../screens/LoadingScreen";
 import { ProductScreenAdmin } from "../screens/ProductScreenAdmin";
+import { LandingScreenAdmin } from "../screens/LandingScreenAdmin";
 
 export type RootStackParams = {
   LoadingScreen: undefined;
   LoginScreen: undefined;
   RegisterScreen: undefined;
   LandingScreen: undefined;
+  LandingScreenAdmin: undefined;
   ProductScreen: { productId: number };
   ProductScreenAdmin: { productId: number };
   FavoriteScreen: undefined;
@@ -67,6 +69,11 @@ export const StackNavigator = () => {
         options={{ cardStyleInterpolator: fadeAnimation }}
         name="LandingScreen"
         component={LandingScreen}
+      />
+      <Stack.Screen
+        options={{ cardStyleInterpolator: fadeAnimation }}
+        name="LandingScreenAdmin"
+        component={LandingScreenAdmin}
       />
       <Stack.Screen name="ProductScreen" component={ProductScreen} />
       <Stack.Screen name="ProductScreenAdmin" component={ProductScreenAdmin} />
