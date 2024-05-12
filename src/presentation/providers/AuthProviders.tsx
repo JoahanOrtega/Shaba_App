@@ -16,7 +16,7 @@ export const AuthProviders = ({ children }: PropsWithChildren) => {
     console.log("(AuthProvider) status is: " + status);
     if (status !== "checking") {
       if (status === "authenticated") {
-        if (user?.id !== undefined && user.id === 26) {
+        if (user?.id !== undefined && user.id === 1) {
           navigation.reset({
             index: 0,
             // Cambiar la ruta inicial para que hagas tus cambios
