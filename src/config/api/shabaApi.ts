@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 import { StorageAdapter } from "../adapters/storage-adapter";
 
 export const API_URL = process.env.EXPO_PUBLIC_API_URL;
-console.log("ando en la conexion a la api jeje " + API_URL);
+console.log("(shabaApi) endPoint URL =>" + API_URL);
 // process.env.EXPO_PUBLIC_STAGE === "prod"
 //   ? process.env.EXPO_PUBLIC_API_URL
 //   : Platform.OS === "ios"

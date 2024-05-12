@@ -12,8 +12,10 @@ export class StorageAdapter {
 
   static async setItem(key: string, value: string): Promise<void> {
     try {
-      console.log("guardado en storage");
       await AsyncStorage.setItem(key, value);
+      console.log(
+        "(storage-adapters.ts) " + key + " save in storage AS " + value
+      );
     } catch (error) {
       throw new Error(`Error setting item ${key} ${value}`);
     }

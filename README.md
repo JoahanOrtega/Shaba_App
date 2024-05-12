@@ -32,6 +32,8 @@ npm i @gluestack-ui/themed @gluestack-style/react react-native-svg@13.4.0
 
 npm install formik --save
 
+npm install @react-navigation/bottom-tabs
+
 # Configurar .env
 
 copia .env.template => .env

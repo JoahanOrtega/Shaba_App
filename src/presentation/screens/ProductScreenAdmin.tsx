@@ -2,7 +2,12 @@ import React, { useRef } from "react";
 
 import { MainLayout } from "../layouts/MainLayout";
 // import { FlatList, ScrollView } from "@gluestack-ui/themed";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  QueryClient,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../navigation/StackNavigator";
 import { getProductById } from "../../actions/products/get-product-by-id";
@@ -34,6 +39,8 @@ export const ProductScreenAdmin = ({ route }: Props) => {
   // Obtener parametros
   const productIdRef = useRef(route.params.productId);
   const theme = useTheme();
+  /** Revalidar cuando se haga un cmabio */
+  const QueryClient = useQueryClient();
   // const { productId } = route.params;
 
   const { data: product } = useQuery({
@@ -48,6 +55,12 @@ export const ProductScreenAdmin = ({ route }: Props) => {
     onSuccess(data: Product) {
       productIdRef.current = data.id; //creacion es util
       console.log("(ProductScreenAdmin) Success");
+      // al hacer cambios a la bd invalidar lo que se esta mostrando en (LandingScreen)
+      // Cuando haga la invalidacion se va a volver a cargar la data
+      QueryClient.invalidateQueries({ queryKey: ["products", "infinite"] });
+
+      // Los mismo pero con el useQuery de esta Screen (ProductScreenAdmin)
+      QueryClient.invalidateQueries({ queryKey: ["product", data.id] });
     },
   });
 
@@ -131,7 +144,7 @@ export const ProductScreenAdmin = ({ route }: Props) => {
                 label={"Stock"}
                 style={{ flex: 1 }}
                 value={values.available_quantity.toString()}
-                onChangeText={handleChange("values")}
+                onChangeText={handleChange("available_quantity")}
                 keyboardType="numeric"
               />
             </Layout>

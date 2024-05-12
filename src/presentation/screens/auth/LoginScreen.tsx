@@ -21,9 +21,8 @@ export const LoginScreen = ({ navigation }: Props) => {
   const { height } = useWindowDimensions();
 
   const onLogin = async () => {
-    console.log("entre al metodo onlogin");
     if (form.email.length === 0 || form.password.length === 0) {
-      console.log("esta vacio el formulario");
+      Alert.alert("Error", "Ingrese datos al formulario");
       return;
     }
     setIsPosting(true);
@@ -31,13 +30,15 @@ export const LoginScreen = ({ navigation }: Props) => {
     setIsPosting(false);
 
     console.log(wasSuccessful);
-    if (wasSuccessful){
-      const user = useAuthStore.getState().user;
-      if (user) {
-        navigation.navigate("UserProfileScreen", { userId: user.id });
-      }
+    if (wasSuccessful) {
+      // const user = useAuthStore.getState().user;
+      // if (user) {
+      //   navigation.navigate("UserProfileScreen", { userId: user.id });
+      // }
+      console.log("(LoginScreen) Login was succesfull");
+      return;
     }
-    console.log("termino la validacion");
+
     Alert.alert("Error", "Usuario o contraseña incorrectos");
   };
 
@@ -45,7 +46,6 @@ export const LoginScreen = ({ navigation }: Props) => {
   // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
   // console.log(apiUrl);
 
-  console.log(height);
   return (
     <Layout style={{ flex: 1 }}>
       <ScrollView style={{ marginHorizontal: 40 }}>

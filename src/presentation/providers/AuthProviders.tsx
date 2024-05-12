@@ -14,13 +14,13 @@ export const AuthProviders = ({ children }: PropsWithChildren) => {
   }, []);
 
   useEffect(() => {
-    console.log("Aca esta el estado del status " + status);
+    console.log("(AuthProvider) status is: " + status);
     if (status !== "checking") {
       if (status === "authenticated") {
         navigation.reset({
           index: 0,
           // Cambiar la ruta inicial para que hagas tus cambios
-          routes: [{ name: "LoginScreen" }],
+          routes: [{ name: "LandingScreen" }],
         });
       } else {
         navigation.reset({

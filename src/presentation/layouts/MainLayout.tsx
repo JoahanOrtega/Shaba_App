@@ -31,6 +31,7 @@ export const MainLayout = ({
   const { top } = useSafeAreaInsets();
   const { canGoBack, goBack } = useNavigation();
 
+  console.log("(MainLayout) canGoBack()? " + canGoBack());
   const renderBackAction = () => (
     <TopNavigationAction
       icon={<MyIcon name="arrow-back-outline" />}
@@ -40,6 +41,7 @@ export const MainLayout = ({
 
   const RenderRightAction = () => {
     if (rightAction === undefined || rightActionIcon === undefined) return null;
+
     return (
       <TopNavigationAction
         onPress={rightAction}
