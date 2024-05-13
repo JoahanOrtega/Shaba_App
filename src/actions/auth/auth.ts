@@ -3,7 +3,6 @@ import { shabaApi } from "../../config/api/shabaApi";
 import { User } from "../../domain/entities/user";
 import type {
   AuthLogoutResponse,
-  AuthRegisterResponse,
   AuthResponse,
 } from "../../infrastructure/interfaces/auth.responses";
 
@@ -27,21 +26,6 @@ const returnUserToken = (data: AuthResponse) => {
   };
 };
 
-const returnUser = (data: AuthRegisterResponse) => {
-  const user: User = {
-    id: data.data.id,
-    first_name: data.data.first_name,
-    last_name: data.data.last_name,
-    address: data.data.address,
-    email: data.data.email,
-    phone: data.data.phone,
-  };
-
-  return {
-    user: user,
-  };
-};
-
 export const AuthLogin = async (email: string, password: string) => {
   //lowe case the email
   email = email.toLowerCase();
@@ -57,39 +41,15 @@ export const AuthLogin = async (email: string, password: string) => {
     return null;
   }
 };
-
-export const AuthRegister = async (
-  firstName: string,
-  lastName: string,
-  address: string,
-  phone: string,
-  email: string,
-  password: string,
-  password_confirmation: string
-) => {
-  //lowe case the email
-  email = email.toLowerCase();
-
+export const AuthRegister = async (userData: Partial<User>) => {
   try {
-    const { data } = await shabaApi.post("/register", {
-      firstName,
-      lastName,
-      address,
-      phone,
-      email,
-      password,
-      password_confirmation,
-    });
-    console.log("Respuesta del register");
-    console.log(data);
-    if (data.status !== "400") return returnUser(data);
+    const { data } = await shabaApi.post<AuthResponse>("/users", userData);
+    return returnUserToken(data);
   } catch (error) {
-    console.log("estoy aca del register");
     console.log(error);
     return null;
   }
 };
-
 export const AuthCheck = async () => {
   try {
     const { data } = await shabaApi.get<AuthResponse>("/check");

@@ -1,63 +1,35 @@
-import { StackScreenProps } from "@react-navigation/stack";
 import React, { useState } from "react";
-import { Alert, StyleSheet, useWindowDimensions } from "react-native";
-import { RootStackParams } from "../../navigation/StackNavigator";
-import { Button, Input, Layout, Text } from "@ui-kitten/components";
+import { StyleSheet, useWindowDimensions } from "react-native";
+import { Layout, Text, Button, Input } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { MyIcon } from "../../components/ui/MyIcon";
-import { useAuthStore } from "../../store/auth/useAuthStore";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParams } from "../../navigation/StackNavigator";
+import { AuthRegister } from "../../../actions/auth/auth"; // Importar la función AuthRegister
 
 interface Props extends StackScreenProps<RootStackParams, "RegisterScreen"> {}
 
 export const RegisterScreen = ({ navigation }: Props) => {
-  const { register } = useAuthStore();
-
-  const [isPosting, setIsPosting] = useState(false);
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+  const { height } = useWindowDimensions();
+  const [user, setUser] = useState({
+    first_name: "",
+    last_name: "",
     address: "",
-    phone: "",
     email: "",
+    phone: "",
     password: "",
     password_confirmation: "",
   });
 
-  const { height } = useWindowDimensions();
+  const handleRegister = async () => {
+    const registeredUser = await AuthRegister(user);
 
-  const onRegister = async () => {
-    if (
-      form.firstName.length === 0 ||
-      form.lastName.length === 0 ||
-      form.address.length === 0 ||
-      form.phone.length === 0 ||
-      form.email.length === 0 ||
-      form.password.length === 0 ||
-      form.password_confirmation.length === 0
-    ) {
-      Alert.alert("Error", "Ingrese datos al formulario");
-      return;
-    }
-    setIsPosting(true);
-    const wasSuccessful = await register(
-      form.firstName,
-      form.lastName,
-      form.address,
-      form.phone,
-      form.email,
-      form.password,
-      form.password_confirmation
-    );
-    setIsPosting(false);
-
-    console.log(wasSuccessful);
-    if (wasSuccessful) {
-      const user = useAuthStore.getState().user;
-      console.log("(RegisterScreen) Register was succesful");
+    if (registeredUser) {
+      // Si el usuario se registró exitosamente, redirige a la pantalla de inicio de sesión
       navigation.navigate("LoginScreen");
+    } else {
+      // Manejo de errores o mostrar mensaje al usuario si el registro falla
     }
-
-    Alert.alert("Error", "Usuario o contraseña incorrectos");
   };
 
   return (
@@ -66,119 +38,100 @@ export const RegisterScreen = ({ navigation }: Props) => {
         {/* title */}
         <Layout style={{ paddingTop: height * 0.2 }}>
           <Text category="h1">Crear cuenta</Text>
-          <Text category="p2">Por favor, crea una cuenta continuar</Text>
+          <Text category="p2">Por favor, crea una cuenta para continuar</Text>
         </Layout>
 
         {/* Inputs */}
         <Layout style={{ marginTop: 20 }}>
           <Input
-            placeholder="First name"
-            keyboardType="default"
-            value={form.firstName}
-            onChangeText={(firstName) => setForm({ ...form, firstName })}
+            placeholder="Nombre"
             accessoryLeft={<MyIcon name="person-outline" />}
             style={{ marginBottom: 10 }}
+            value={user.first_name}
+            onChangeText={(text) => setUser({ ...user, first_name: text })}
           />
           <Input
-            placeholder="Last name"
-            keyboardType="default"
-            value={form.lastName}
-            onChangeText={(lastName) => setForm({ ...form, lastName })}
+            placeholder="Apellido"
             accessoryLeft={<MyIcon name="person-outline" />}
             style={{ marginBottom: 10 }}
+            value={user.last_name}
+            onChangeText={(text) => setUser({ ...user, last_name: text })}
           />
           <Input
-            placeholder="Address"
-            value={form.address}
-            onChangeText={(address) => setForm({ ...form, address })}
+            placeholder="Dirección"
             accessoryLeft={<MyIcon name="navigation-outline" />}
             style={{ marginBottom: 10 }}
+            value={user.address}
+            onChangeText={(text) => setUser({ ...user, address: text })}
           />
           <Input
-            placeholder="Phone"
-            value={form.phone}
-            onChangeText={(phone) => setForm({ ...form, phone })}
+            placeholder="Teléfono"
             accessoryLeft={<MyIcon name="phone-outline" />}
             style={{ marginBottom: 10 }}
+            value={user.phone}
+            onChangeText={(text) => setUser({ ...user, phone: text })}
           />
           <Input
-            placeholder="Email"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={form.email}
-            onChangeText={(email) => setForm({ ...form, email })}
+            placeholder="Correo electrónico"
             accessoryLeft={<MyIcon name="email-outline" />}
             style={{ marginBottom: 10 }}
+            value={user.email}
+            onChangeText={(text) => setUser({ ...user, email: text })}
           />
           <Input
-            placeholder="Password"
-            autoCapitalize="none"
-            secureTextEntry
-            value={form.password}
-            onChangeText={(password) => setForm({ ...form, password })}
+            placeholder="Contraseña"
             accessoryLeft={<MyIcon name="lock-outline" />}
             style={{ marginBottom: 10 }}
+            secureTextEntry
+            value={user.password}
+            onChangeText={(text) => setUser({ ...user, password: text })}
           />
           <Input
-            placeholder="Confirm password"
-            autoCapitalize="none"
+            placeholder="Confirmar Contraseña"
+            accessoryLeft={<MyIcon name="lock-outline" />}
+            style={{ marginBottom: 10 }}
             secureTextEntry
-            value={form.password_confirmation}
-            onChangeText={(password_confirmation) =>
-              setForm({ ...form, password_confirmation })
+            value={user.password_confirmation}
+            onChangeText={(text) =>
+              setUser({ ...user, password_confirmation: text })
             }
-            accessoryLeft={<MyIcon name="lock-outline" />}
-            style={{ marginBottom: 10 }}
           />
-        </Layout>
 
-        {/* visualize what inputs i have */}
-        <Text> {JSON.stringify(form, null, 2)}</Text>
+          {/* Button */}
+          <Layout>
+            <Button onPress={handleRegister}>Crear</Button>
+          </Layout>
 
-        {/* Space */}
-        <Layout style={{ height: 10 }} />
-
-        {/* Button */}
-        <Layout>
-          <Button
-            disabled={isPosting}
-            accessoryRight={<MyIcon name="log-in-outline" white />}
-            onPress={onRegister}
-            // appearance="ghost"
-          >
-            Crear
-          </Button>
-        </Layout>
-
-        {/* Informacion para crear cuenta */}
-        <Layout style={{ height: 50 }} />
-        <Layout
-          style={{
-            alignItems: "flex-end",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Text>¿Ya tienes cuenta?</Text>
-          <Text
-            status="primary"
-            category="s1"
-            onPress={() => {
-              navigation.goBack();
+          {/* Información para crear cuenta */}
+          <Layout style={{ height: 50 }} />
+          <Layout
+            style={{
+              alignItems: "flex-end",
+              flexDirection: "row",
+              justifyContent: "center",
             }}
           >
-            {" "}
-            Inicia sesion{" "}
-          </Text>
+            <Text>¿Ya tienes cuenta?</Text>
+            <Text
+              status="primary"
+              category="s1"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              {" "}
+              Inicia sesión{" "}
+            </Text>
+          </Layout>
         </Layout>
-        {/* Solo para hacer mas scroll */}
-        <Layout style={{ height: 150 }} />
       </ScrollView>
     </Layout>
   );
 };
 
 const styles = StyleSheet.create({});
+
+
 
 // <View style={globalStyles.container}>
 //   <LinearGradient
