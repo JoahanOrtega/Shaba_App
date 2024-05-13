@@ -22,6 +22,7 @@ import {
 } from "@ui-kitten/components";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategories } from "../../actions/category/get-categories";
+import { deleteProductById } from "../../actions/products/delete-product-by-id";
 
 const sizes: Size[] = [Size.L, Size.M, Size.S];
 
@@ -70,6 +71,14 @@ export const ProductScreenAdmin = ({ route }: Props) => {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteProductById(productIdRef.current),
+    onSuccess() {
+      Alert.alert("Delete", "the product deleted successfully!");
+      // Redirigir a otra pantalla o realizar alguna acción adicional después de la eliminación
+    },
+  });
+
   useEffect(() => {
     if (product && product.id_category) {
       const categoryIndex = categories.findIndex(
@@ -78,6 +87,17 @@ export const ProductScreenAdmin = ({ route }: Props) => {
       setSelectedCategoryIndex(new IndexPath(categoryIndex));
     }
   }, [product, categories]);
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this product?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Delete", onPress: () => deleteMutation.mutate() },
+      ]
+    );
+  };
 
   if (!product) {
     return <MainLayout title="Cargando...." />;
@@ -92,7 +112,11 @@ export const ProductScreenAdmin = ({ route }: Props) => {
     >
       {/* Renderizando el componente MainLayout dentro de Formik */}
       {({ handleChange, handleSubmit, values, errors, setFieldValue }) => (
-        <MainLayout title={values.name}>
+        <MainLayout
+          title={values.name}
+          rightAction={() => handleDelete}
+          rightActionIcon="trash-2-outline"
+        >
           <ScrollView style={{ flex: 1 }}>
             {/* Imagen */}
             <Layout>
@@ -224,7 +248,7 @@ export const ProductScreenAdmin = ({ route }: Props) => {
               Guardar
             </Button>
 
-            <Text>{JSON.stringify(values, null, 2)}</Text>
+            {/* <Text>{JSON.stringify(values, null, 2)}</Text> */}
 
             {/* Solo para hacer mas scroll */}
             <Layout style={{ height: 200 }} />

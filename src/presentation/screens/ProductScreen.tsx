@@ -68,7 +68,10 @@ export const ProductScreen = ({ route }: Props) => {
       updateCreateProduct({ ...data, id: productIdRef.current }),
     onSuccess(data: Product) {
       productIdRef.current = data.id; //creacion es util
-      Alert.alert("Update", "the product updated successfuly!");
+      Alert.alert(
+        "Purchase",
+        "We will send your product to your house " + values.address + ""
+      ); // Cuando haga la invalidacion se va a volver a cargar la data
       // al hacer cambios a la bd invalidar lo que se esta mostrando en (LandingScreen)
       // Cuando haga la invalidacion se va a volver a cargar la data
       QueryClient.invalidateQueries({ queryKey: ["products", "infinite"] });
@@ -96,7 +99,22 @@ export const ProductScreen = ({ route }: Props) => {
       // validateeeee (aqui valida el formulario)
 
       // onSubmit={mutation.mutate}
-      onSubmit={(values) => mutation.mutate(values)}
+
+      onSubmit={(values) => {
+        if (values.available_quantity > 0) {
+          const updatedValues = {
+            ...values,
+            available_quantity: values.available_quantity - 1,
+          };
+          mutation.mutate(updatedValues);
+        } else {
+          // Mostrar una alerta indicando que el producto no está disponible
+          Alert.alert(
+            "Product Not Available",
+            "This product is not available for purchase."
+          );
+        }
+      }}
     >
       {/* Renderizando el componente MainLayout dentro de Formik */}
       {({ handleChange, handleSubmit, values, errors, setFieldValue }) => (
@@ -238,19 +256,14 @@ export const ProductScreen = ({ route }: Props) => {
             {/* Save button */}
             <Button
               accessoryLeft={<MyIcon name={"shopping-bag-outline"} white />}
-              onPress={
-                /*Aqui va la logica para implementar la compra donde vas a restar 1 a available_quantity si quieres
-                redireccionar a la pantalla salesscreen y hacer tambien el metodo post para sales
-                y ya
-                en salesscreen vas a mostrar un flatlist de las ventas del usuario nada mas*/
-                () => {}
-              }
+              onPress={() => handleSubmit()}
+              disabled={mutation.isPending}
               style={{ margin: 15 }}
             >
               Comprar
             </Button>
 
-            <Text>{JSON.stringify(values, null, 2)}</Text>
+            {/* <Text>{JSON.stringify(values, null, 2)}</Text> */}
 
             {/* Solo para hacer mas scroll */}
             <Layout style={{ height: 200 }} />

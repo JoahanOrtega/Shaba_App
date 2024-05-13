@@ -79,7 +79,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         </Layout>
 
         {/* visualize what inputs i have */}
-        <Text> {JSON.stringify(form, null, 2)}</Text>
+        {/* <Text> {JSON.stringify(form, null, 2)}</Text> */}
 
         {/* Space */}
         <Layout style={{ height: 10 }} />

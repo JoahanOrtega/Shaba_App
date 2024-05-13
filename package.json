@@ -23,10 +23,10 @@
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
     "axios": "^1.6.8",
-    "expo": "~51.0.2",
+    "expo": "~51.0.4",
     "expo-constants": "~16.0.1",
     "expo-linking": "~6.3.1",
-    "expo-router": "~3.5.11",
+    "expo-router": "~3.5.12",
     "expo-status-bar": "~1.12.1",
     "formik": "^2.4.6",
     "react": "18.2.0",
@@ -44,7 +44,7 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "react-native-dotenv": "^3.4.11",
-    "typescript": "^5.4.5"
+    "typescript": "~5.3.3"
   },
   "private": true
 }
