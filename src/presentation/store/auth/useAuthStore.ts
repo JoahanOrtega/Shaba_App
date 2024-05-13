@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { User } from "../../../domain/entities/user";
 import { AuthStatus } from "../../../infrastructure/interfaces/auth.status";
-import { AuthLogin, AuthCheck, AuthLogout } from "../../../actions/auth/auth";
+import {
+  AuthLogin,
+  AuthCheck,
+  AuthLogout,
+  AuthRegister,
+} from "../../../actions/auth/auth";
 import { StorageAdapter } from "../../../config/adapters/storage-adapter";
 
 export interface AuthState {
@@ -9,6 +14,15 @@ export interface AuthState {
   token?: string;
   user?: User;
   login: (email: string, password: string) => Promise<boolean>;
+  register: (
+    firstName: string,
+    lastName: string,
+    address: string,
+    phone: string,
+    email: string,
+    password: string,
+    password_confirmation: string
+  ) => Promise<boolean>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -17,6 +31,34 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   status: "checking",
   token: undefined,
   user: undefined,
+
+  register: async (
+    firstName: string,
+    lastName: string,
+    address: string,
+    phone: string,
+    email: string,
+    password: string,
+    password_confirmation: string
+  ) => {
+    const resp = await AuthRegister(
+      firstName,
+      lastName,
+      address,
+      phone,
+      email,
+      password,
+      password_confirmation
+    );
+    if (!resp) {
+      //no esta autenticado
+      set({ status: "unauthenticated", token: undefined, user: undefined });
+      return false;
+    }
+
+    set({ status: "unauthenticated", token: undefined, user: undefined });
+    return true;
+  },
   login: async (email: string, password: string) => {
     const resp = await AuthLogin(email, password);
     if (!resp) {

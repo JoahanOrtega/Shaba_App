@@ -22,3 +22,19 @@ export interface AuthLogoutResponse {
   status: string;
   meesage: string;
 }
+export interface AuthRegisterResponse {
+  status: string;
+  meesage: string;
+  data: DataRegister;
+}
+
+export interface DataRegister {
+  first_name: string;
+  last_name: string;
+  address: string;
+  phone: string;
+  email: string;
+  updated_at: Date;
+  created_at: Date;
+  id: number;
+}

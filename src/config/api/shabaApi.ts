@@ -28,5 +28,5 @@ shabaApi.interceptors.request.use(async (config) => {
 
   return config;
 });
-
+console.log("shabaApi " + shabaApi);
 export { shabaApi };
