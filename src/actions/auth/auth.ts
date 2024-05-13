@@ -41,7 +41,15 @@ export const AuthLogin = async (email: string, password: string) => {
     return null;
   }
 };
-
+export const AuthRegister = async (userData: Partial<User>) => {
+  try {
+    const { data } = await shabaApi.post<AuthResponse>("/users", userData);
+    return returnUserToken(data);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 export const AuthCheck = async () => {
   try {
     const { data } = await shabaApi.get<AuthResponse>("/check");
