@@ -5,6 +5,7 @@ import { Card, Text } from "@ui-kitten/components";
 import { FadeInImage } from "../ui/FadeInImage";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../navigation/StackNavigator";
+import { useAuthStore } from "../../store/auth/useAuthStore";
 // import { Text } from "@ui-kitten/components";
 // import { Image } from "@gluestack-ui/themed";
 interface Props {
@@ -13,13 +14,20 @@ interface Props {
 
 export const ProductCard = ({ product }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
+  const { user } = useAuthStore();
 
   return (
     <Card
       style={{ flex: 1, margin: 3 }}
       onPress={() => {
+        {
+          user?.id !== undefined && user.id === 1
+            ? navigation.navigate("ProductScreenAdmin", {
+                productId: product.id,
+              })
+            : navigation.navigate("ProductScreen", { productId: product.id });
+        }
         // call ProductScreen with the params of the id
-        navigation.navigate("ProductScreenAdmin", { productId: product.id });
       }}
     >
       {!product.img ? (
