@@ -1,13 +1,16 @@
 import { shabaApi } from "../config/api/shabaApi";
-import { Data } from "../infrastructure/interfaces/auth.responses";
+import { DataRegister } from "../infrastructure/interfaces/auth.responses";
 
 // updateUser en user.ts
 export const updateUser = async (
   userId: number,
-  userData: Partial<Data>
-): Promise<Data | null> => {
+  userData: Partial<DataRegister>
+): Promise<DataRegister | null> => {
   try {
-    const response = await shabaApi.put<Data>(`/users/${userId}`, userData);
+    const response = await shabaApi.put<DataRegister>(
+      `/users/${userId}`,
+      userData
+    );
     console.log(
       "Respuesta del servidor después de actualizar usuario:",
       response.data

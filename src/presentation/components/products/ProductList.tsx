@@ -43,7 +43,7 @@ export const ProductList = ({ products }: Props) => {
           />
         }
       />
-      <Button>Hola desde productList</Button>
+      {/* <Button>Hola desde productList</Button> */}
     </>
   );
 };
