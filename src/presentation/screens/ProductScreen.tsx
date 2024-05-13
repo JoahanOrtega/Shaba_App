@@ -25,8 +25,7 @@ import { getCategories } from "../../actions/category/get-categories";
 
 const sizes: Size[] = [Size.L, Size.M, Size.S];
 
-interface Props
-  extends StackScreenProps<RootStackParams, "ProductScreenAdmin"> {}
+interface Props extends StackScreenProps<RootStackParams, "ProductScreen"> {}
 
 export const ProductScreen = ({ route }: Props) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<
