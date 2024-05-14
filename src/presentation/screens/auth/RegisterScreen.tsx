@@ -31,7 +31,9 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
   const handleRegister = async () => {
     // Validate before submission
-    const hasErrors = Object.values(errors).some((error) => error !== undefined && error !== "");
+    const hasErrors = Object.values(errors).some(
+      (error) => error !== undefined && error !== ""
+    );
     if (hasErrors) {
       return;
     }
@@ -51,7 +53,8 @@ export const RegisterScreen = ({ navigation }: Props) => {
       case "first_name":
       case "last_name":
         if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
-          errorMessage = "Este campo no puede contener números ni caracteres especiales";
+          errorMessage =
+            "Este campo no puede contener números ni caracteres especiales";
         }
         break;
       case "address":
@@ -66,7 +69,8 @@ export const RegisterScreen = ({ navigation }: Props) => {
         break;
       case "phone":
         if (!/^\d{10}$/.test(value.trim())) {
-          errorMessage = "El número de teléfono debe tener 10 dígitos y no debe contener letras";
+          errorMessage =
+            "El número de teléfono debe tener 10 dígitos y no debe contener letras";
         }
         break;
       case "password":
@@ -175,7 +179,13 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
           {/* Button */}
           <Layout>
-            <Button onPress={handleRegister}>Crear</Button>
+            <Button
+              // style={{ backgroundColor: "#ffc0cb", borderColor: "#ffc0cb" }}
+              status="danger"
+              onPress={handleRegister}
+            >
+              Crear
+            </Button>
           </Layout>
 
           {/* Información para crear cuenta */}
@@ -204,9 +214,6 @@ export const RegisterScreen = ({ navigation }: Props) => {
     </Layout>
   );
 };
-
-
-
 
 // <View style={globalStyles.container}>
 //   <LinearGradient

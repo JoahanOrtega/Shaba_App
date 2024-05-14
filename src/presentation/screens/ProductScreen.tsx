@@ -66,7 +66,7 @@ export const ProductScreen = ({ route }: Props) => {
   const mutation = useMutation({
     mutationFn: (data: Product) =>
       updateCreateProduct({ ...data, id: productIdRef.current }),
-    onSuccess(data: Product) {
+    onSuccess(data: Product, values: any) {
       productIdRef.current = data.id; //creacion es util
       Alert.alert(
         "Purchase",
@@ -95,7 +95,7 @@ export const ProductScreen = ({ route }: Props) => {
   }
   return (
     <Formik
-      initialValues={product}
+      initialValues={{ ...product, address: "" }}
       // validateeeee (aqui valida el formulario)
 
       // onSubmit={mutation.mutate}
@@ -244,9 +244,14 @@ export const ProductScreen = ({ route }: Props) => {
                   key={size}
                   style={{
                     flex: 1,
-                    backgroundColor: values.size.startsWith(size)
-                      ? theme["color-primary-200"]
-                      : undefined,
+                    borderColor:
+                      size === values.size
+                        ? "#ffc0cb"
+                        : theme["color-basic-400"], // Cambiar el color del borde según si el tamaño está seleccionado o no
+                    backgroundColor:
+                      size === values.size
+                        ? "#ffc0cb"
+                        : theme["color-basic-100"], // Cambiar el color de fondo según si el tamaño está seleccionado o no
                   }}
                 >
                   {size}
@@ -258,7 +263,11 @@ export const ProductScreen = ({ route }: Props) => {
               accessoryLeft={<MyIcon name={"shopping-bag-outline"} white />}
               onPress={() => handleSubmit()}
               disabled={mutation.isPending}
-              style={{ margin: 15 }}
+              style={{
+                margin: 15,
+                backgroundColor: "#ffc0cb",
+                borderColor: "#ffc0cb",
+              }} // Cambiar el color del botón a rosa
             >
               Comprar
             </Button>

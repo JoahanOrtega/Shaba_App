@@ -15,6 +15,8 @@ export const FAB = ({ style, iconName, onPress }: Props) => {
       <Button
         style={[
           {
+            // backgroundColor: "#ffc0cb",
+            // borderColor: "#ffc0cb",
             shadowColor: "black",
             shadowOffset: {
               width: 0,
@@ -29,6 +31,8 @@ export const FAB = ({ style, iconName, onPress }: Props) => {
         ]}
         accessoryLeft={<MyIcon name={iconName} white />}
         onPress={onPress}
+        // appearance="outline" // Set appearance to outline
+        status="danger"
       />
     </Layout>
   );

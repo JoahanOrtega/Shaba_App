@@ -1,8 +1,17 @@
 import { shabaApi } from "../config/api/shabaApi";
-import { Data } from "../infrastructure/interfaces/auth.responses";
+import {
+  AuthLogoutResponse,
+  Data,
+} from "../infrastructure/interfaces/auth.responses";
+
+const returnDeleteSuccess = (data: AuthLogoutResponse) => {
+  return data.status === "200";
+};
 
 // updateUser en user.ts
-export const updateUser = async (userId: number,userData: Partial<Data>
+export const updateUser = async (
+  userId: number,
+  userData: Partial<Data>
 ): Promise<Data | null> => {
   try {
     const response = await shabaApi.put<Data>(`/users/${userId}`, userData);
@@ -18,11 +27,13 @@ export const updateUser = async (userId: number,userData: Partial<Data>
 };
 
 // deleteUser en user.ts
-export const deleteUser = async (userId: number): Promise<void> => {
+export const deleteUser = async (userId: number): Promise<boolean> => {
   try {
     console.log("Intentando eliminar usuario con ID:", userId);
-    await shabaApi.delete(`/users/${userId}`);
-    console.log("Usuario eliminado correctamente");
+    const { data } = await shabaApi.delete(`/users/${userId}`);
+    console.log("Al intentar eliminar el usuario se obtu como respuesta =");
+    console.log(data);
+    return returnDeleteSuccess(data);
   } catch (error) {
     console.error("Error al eliminar la cuenta del usuario:", error);
     throw error;

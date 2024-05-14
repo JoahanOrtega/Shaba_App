@@ -32,12 +32,12 @@ export const LoginScreen = ({ navigation }: Props) => {
   };
 
   const validatePassword = (password: string): string | undefined => {
-    if(!password){
+    if (!password) {
       return;
     }
-      if (password.trim().length < 8) {
-        return "La contraseña debe tener al menos 8 caracteres";
-      }
+    if (password.trim().length < 8) {
+      return "La contraseña debe tener al menos 8 caracteres";
+    }
     return undefined;
   };
 
@@ -108,8 +108,10 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout>
           <Button
             disabled={isPosting}
+            // style={{ backgroundColor: "#ffc0cb", borderColor: "#ffc0cb" }}
             accessoryRight={<MyIcon name="log-in-outline" white />}
             onPress={onLogin}
+            status="danger"
           >
             Ingresar
           </Button>
@@ -140,7 +142,6 @@ export const LoginScreen = ({ navigation }: Props) => {
     </Layout>
   );
 };
-
 
 {
   /* <Layout style={{ flex: 1 }}>

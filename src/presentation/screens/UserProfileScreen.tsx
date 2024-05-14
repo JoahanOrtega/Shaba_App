@@ -7,14 +7,15 @@ import { useAuthStore } from "../store/auth/useAuthStore";
 import { updateUser, deleteUser } from "../../actionsUser/user";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
-interface Props extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
+interface Props
+  extends StackScreenProps<RootStackParams, "UserProfileScreen"> {}
 
 export const UserProfileScreen = ({ route }: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const userId = route.params.userId;
   console.log("Estoy dentro de UserProfileScreen con id " + userId);
-  const { user, logout } = useAuthStore();
+  const { user, removeAccount } = useAuthStore();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -24,7 +25,7 @@ export const UserProfileScreen = ({ route }: Props) => {
     confirmPassword: "",
     currentPassword: "",
   });
-  
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -61,7 +62,8 @@ export const UserProfileScreen = ({ route }: Props) => {
       case "first_name":
       case "last_name":
         if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
-          errorMessage = "Este campo no puede contener números ni caracteres especiales";
+          errorMessage =
+            "Este campo no puede contener números ni caracteres especiales";
         }
         break;
       case "address":
@@ -90,7 +92,9 @@ export const UserProfileScreen = ({ route }: Props) => {
 
   const handleSubmit = async () => {
     // Validation before submission
-    const hasErrors = Object.values(errors).some((error) => error !== undefined && error !== "");
+    const hasErrors = Object.values(errors).some(
+      (error) => error !== undefined && error !== ""
+    );
     if (hasErrors) {
       return;
     }
@@ -98,7 +102,10 @@ export const UserProfileScreen = ({ route }: Props) => {
     try {
       console.log("Enviando datos de usuario para actualizar:", formData);
       const updatedUser = await updateUser(userId, formData);
-      console.log("Respuesta del servidor después de la actualización:", updatedUser);
+      console.log(
+        "Respuesta del servidor después de la actualización:",
+        updatedUser
+      );
       if (updatedUser) {
         navigation.navigate("LandingScreen");
       } else {
@@ -113,8 +120,17 @@ export const UserProfileScreen = ({ route }: Props) => {
 
   const handleDeleteAccount = async () => {
     try {
-      await deleteUser(userId);
+      const onDelete = await removeAccount(userId);
       setDeleteSuccess(true);
+      console.log(
+        onDelete +
+          "<- se ha completado la operacion de eliminar la cuenta(" +
+          deleteSuccess +
+          ")"
+      );
+      // if (deleteSuccess) {
+      //   navigation.navigate("LoginScreen");
+      // }
     } catch (error) {
       console.error("Error al eliminar la cuenta del usuario:", error);
     }
@@ -176,8 +192,21 @@ export const UserProfileScreen = ({ route }: Props) => {
           onChangeText={(value) => handleChange("confirmPassword", value)}
         />
         {/* Botones de guardar y eliminar */}
-        <Button onPress={handleSubmit}>Guardar Cambios</Button>
-        <Button onPress={handleDeleteAccount} status="danger">
+        <Button
+          style={{
+            marginTop: 15,
+            backgroundColor: "#ffc0cb",
+            borderColor: "#ffc0cb",
+          }}
+          onPress={handleSubmit}
+        >
+          Guardar Cambios
+        </Button>
+        <Button
+          style={{ marginTop: 10 }}
+          onPress={handleDeleteAccount}
+          status="danger"
+        >
           Eliminar Cuenta
         </Button>
         {/* Mensaje de éxito si se eliminó la cuenta */}

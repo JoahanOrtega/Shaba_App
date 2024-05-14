@@ -229,9 +229,14 @@ export const ProductScreenAdmin = ({ route }: Props) => {
                   key={size}
                   style={{
                     flex: 1,
-                    backgroundColor: values.size.startsWith(size)
-                      ? theme["color-primary-200"]
-                      : undefined,
+                    borderColor:
+                      size === values.size
+                        ? "#ffc0cb"
+                        : theme["color-basic-400"], // Cambiar el color del borde según si el tamaño está seleccionado o no
+                    backgroundColor:
+                      size === values.size
+                        ? "#ffc0cb"
+                        : theme["color-basic-100"],
                   }}
                 >
                   {size}
@@ -243,7 +248,11 @@ export const ProductScreenAdmin = ({ route }: Props) => {
               accessoryLeft={<MyIcon name={"save-outline"} white />}
               onPress={() => handleSubmit()}
               disabled={mutation.isPending}
-              style={{ margin: 15 }}
+              style={{
+                margin: 15,
+                backgroundColor: "#ffc0cb",
+                borderColor: "#ffc0cb",
+              }}
             >
               Guardar
             </Button>

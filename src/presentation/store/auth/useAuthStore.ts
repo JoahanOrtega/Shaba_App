@@ -8,6 +8,7 @@ import {
   AuthRegister,
 } from "../../../actions/auth/auth";
 import { StorageAdapter } from "../../../config/adapters/storage-adapter";
+import { deleteUser } from "../../../actionsUser/user";
 
 export interface AuthState {
   status: AuthStatus;
@@ -25,6 +26,7 @@ export interface AuthState {
   ) => Promise<boolean>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
+  removeAccount: (userId: number) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
@@ -92,5 +94,15 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     if (!resp) return;
     await StorageAdapter.removeItem("token");
     set({ status: "unauthenticated", token: undefined, user: undefined });
+  },
+  removeAccount: async (userId: number) => {
+    const resp = await deleteUser(userId);
+    if (resp !== null) {
+      await StorageAdapter.removeItem("token");
+      set({ status: "unauthenticated", token: undefined, user: undefined });
+      // return true;
+    } else {
+      // return false;
+    }
   },
 }));
