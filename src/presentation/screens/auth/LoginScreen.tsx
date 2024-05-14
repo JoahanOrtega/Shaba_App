@@ -1,10 +1,10 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { Button, Icon, Input, Layout, Text } from "@ui-kitten/components";
+import React, { useState } from "react";
+import { Layout, Text, Input, Button } from "@ui-kitten/components";
 import { Alert, useWindowDimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../../navigation/StackNavigator";
 import { MyIcon } from "../../components/ui/MyIcon";
-import { useState } from "react";
 import { useAuthStore } from "../../store/auth/useAuthStore";
 import { StorageAdapter } from "../../../config/adapters/storage-adapter";
 
@@ -12,7 +12,6 @@ interface Props extends StackScreenProps<RootStackParams, "LoginScreen"> {}
 
 export const LoginScreen = ({ navigation }: Props) => {
   const { login } = useAuthStore();
-
   const [isPosting, setIsPosting] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -21,32 +20,52 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   const { height } = useWindowDimensions();
 
-  const onLogin = async () => {
-    if (form.email.length === 0 || form.password.length === 0) {
-      Alert.alert("Error", "Ingrese datos al formulario");
+  const validateEmail = (email: string): string | undefined => {
+    if (!email) {
       return;
     }
+    // Validación de formato de correo electrónico
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      return "El correo electrónico no es válido";
+    }
+    return undefined;
+  };
+
+  const validatePassword = (password: string): string | undefined => {
+    if(!password){
+      return;
+    }
+      if (password.trim().length < 8) {
+        return "La contraseña debe tener al menos 8 caracteres";
+      }
+    return undefined;
+  };
+
+  const onLogin = async () => {
+    const emailError = validateEmail(form.email);
+    const passwordError = validatePassword(form.password);
+
+    if (emailError || passwordError) {
+      Alert.alert("Error", emailError || passwordError);
+      return;
+    }
+
     setIsPosting(true);
     const wasSuccessful = await login(form.email, form.password);
     setIsPosting(false);
 
-    console.log(wasSuccessful);
     if (wasSuccessful) {
       const user = useAuthStore.getState().user;
       if (user) {
         await StorageAdapter.setItem("userId", user.id.toString());
         const storedToken = await StorageAdapter.getItem("userId");
       }
-      console.log("(LoginScreen) Login was succesful");
+      console.log("(LoginScreen) Login was successful");
       return;
     }
 
     Alert.alert("Error", "Usuario o contraseña incorrectos");
   };
-
-  // //show env variables
-  // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-  // console.log(apiUrl);
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -66,6 +85,8 @@ export const LoginScreen = ({ navigation }: Props) => {
             onChangeText={(email) => setForm({ ...form, email })}
             accessoryLeft={<MyIcon name="email-outline" />}
             style={{ marginBottom: 10 }}
+            status={validateEmail(form.email) ? "danger" : "basic"}
+            caption={validateEmail(form.email)}
           />
           <Input
             placeholder="Password"
@@ -75,11 +96,10 @@ export const LoginScreen = ({ navigation }: Props) => {
             onChangeText={(password) => setForm({ ...form, password })}
             accessoryLeft={<MyIcon name="lock-outline" />}
             style={{ marginBottom: 10 }}
+            status={validatePassword(form.password) ? "danger" : "basic"}
+            caption={validatePassword(form.password)}
           />
         </Layout>
-
-        {/* visualize what inputs i have */}
-        {/* <Text> {JSON.stringify(form, null, 2)}</Text> */}
 
         {/* Space */}
         <Layout style={{ height: 10 }} />
@@ -90,7 +110,6 @@ export const LoginScreen = ({ navigation }: Props) => {
             disabled={isPosting}
             accessoryRight={<MyIcon name="log-in-outline" white />}
             onPress={onLogin}
-            // appearance="ghost"
           >
             Ingresar
           </Button>
@@ -121,6 +140,7 @@ export const LoginScreen = ({ navigation }: Props) => {
     </Layout>
   );
 };
+
 
 {
   /* <Layout style={{ flex: 1 }}>
